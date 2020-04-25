@@ -74,8 +74,8 @@ const Home = ({ match }) => {
     return (
         <div className="content home-page">
             <div className="intro-section">
-                <img className="minion-gif-desktop" alt="minion" src={require("../../images/new-food-minion.gif")} />
-                <img className="minion-gif-mobile" alt="minion" src={require("../../images/Maths-food-Minion-mobile.gif")} />
+                <img className="minion-gif-desktop" alt="minion" src={require("../../images/Maths-food-Minion-black.gif")} />
+                <img className="minion-gif-mobile" alt="minion" src={require("../../images/Maths-food-Minion-mobile-black.gif")} />
                 <div className="text-section">
                     <p>
                         Click on the folders below if you’re hungry to learn mathematics the Mr G way

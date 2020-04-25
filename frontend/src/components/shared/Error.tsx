@@ -7,13 +7,11 @@ interface InputProps {
 
 const Error = (props: InputProps) => {
     return (
-        <div className="content">
-            <div className="error-wrapper">
-                <img className="logo" alt="logo" src={require("../../images/Error-icon.png")} />
-                <h2>Something went wrong.</h2>
-                <p>{props.error}</p>
-            </div >
-        </div>
+        <div className="error-wrapper">
+            <img className="logo" alt="logo" src={require("../../images/Error-icon-transparent.png")} />
+            <h2>Something went wrong.</h2>
+            <p>{props.error}</p>
+        </div >
     )
 }
 

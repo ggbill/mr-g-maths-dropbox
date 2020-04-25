@@ -1,7 +1,7 @@
 .resource-badge.MuiCard-root {
     width: 150px;
     text-align: center;
-    
+
     .MuiCardContent-root {
         display: flex;
         flex-direction: column;
@@ -24,7 +24,8 @@
     }
 
     .card-title-wrapper {
-        min-height: 52px;
+        min-height: 46px;
+        padding-top: 6px;
         span {
             font-size: 1em;
             font-weight: bold;
@@ -47,11 +48,9 @@
             justify-content: center;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 
-            .MuiSvgIcon-root{
+            .MuiSvgIcon-root {
                 width: 15px;
             }
-
-
         }
 
         &.video {
@@ -80,7 +79,7 @@
     }
 }
 
-.resource-badge.MuiCard-root:hover{
+.resource-badge.MuiCard-root:hover {
     position: relative;
     top: -1px;
     border-top-left-radius: 7px;

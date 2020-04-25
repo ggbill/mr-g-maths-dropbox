@@ -26,36 +26,36 @@ const DynamicComponent = ({ match }) => {
         setLoading(true)
         let encodedMatchUrl = match.url.replace(/\//g, "%2F")
         ftpApi.get(`folder-content/${encodedMatchUrl}`)
-        .then((data: any) => {
-            // console.log(`data: ${JSON.stringify(data)}`)
-            if (!isCancelled.current) {
-                if (data) {
-                    if (data.contentBody.subFolders.length) {
-                        data.contentBody.subFolders = cloudinaryFunctions.sortByPrefix(data.contentBody.subFolders)
-                        setSubFolders(data.contentBody.subFolders)
-                    } else {
-                        setIsSubFoldersFound(false)
-                    }
+            .then((data: any) => {
+                // console.log(`data: ${JSON.stringify(data)}`)
+                if (!isCancelled.current) {
+                    if (data) {
+                        if (data.contentBody.subFolders.length) {
+                            data.contentBody.subFolders = cloudinaryFunctions.sortByPrefix(data.contentBody.subFolders)
+                            setSubFolders(data.contentBody.subFolders)
+                        } else {
+                            setIsSubFoldersFound(false)
+                        }
 
-                    if (data.contentBody.files.length) {
-                        data.contentBody.files = cloudinaryFunctions.sortByPrefix(data.contentBody.files)
-                        setFiles(data.contentBody.files)
+                        if (data.contentBody.files.length) {
+                            data.contentBody.files = cloudinaryFunctions.sortByPrefix(data.contentBody.files)
+                            setFiles(data.contentBody.files)
+                        } else {
+                            setIsFilesFound(false)
+                        }
                     } else {
-                        setIsFilesFound(false)
+                        setError("No data found.")
                     }
-                } else {
-                    setError("No data found.")
+                    setLoading(false)
                 }
-                setLoading(false)
-            }
-        })
-        .catch((err: Error) => {
-            if (!isCancelled.current) {
-                console.log(err)
-                setError(err.message)
-                setLoading(false)
-            }
-        })
+            })
+            .catch((err: Error) => {
+                if (!isCancelled.current) {
+                    console.log(err)
+                    setError(err.message)
+                    setLoading(false)
+                }
+            })
     }
 
     const generateBreadcrumbs = (): any => {
@@ -78,7 +78,7 @@ const DynamicComponent = ({ match }) => {
 
     if (error) {
         return (
-           <Error error={error}/> 
+            <Error error={error} />
         )
     }
 
@@ -109,9 +109,9 @@ const DynamicComponent = ({ match }) => {
                     </Box>
                 }
 
-                {!loading && !isSubFoldersFound && !isFilesFound && <div className="no-content-found">
+                {!loading && !isSubFoldersFound && !isFilesFound &&
                     <NoContent />
-                </div>}
+                }
 
             </div>}
 
