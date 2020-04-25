@@ -26,7 +26,7 @@ const ResourceCard = (props: InputProps) => {
                     < Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource} className="resource-card">
                         <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource}`}>
                         <CardMedia
-                            image={require("../../images/Minion-video-icon.png")}
+                            image={require("../../images/Video-icon.png")}
                             title="Click to view the video!"
                         />
                             <CardContent>
@@ -48,7 +48,7 @@ const ResourceCard = (props: InputProps) => {
                 < Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource} className="resource-card">
                     <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource}`}>
                         <CardMedia
-                            image={require("../../images/Minion-video-icon.png")}
+                            image={require("../../images/Audio-icon.png")}
                             title="Click to listen to the audio!"
                         />
                         <CardContent>
@@ -69,7 +69,7 @@ const ResourceCard = (props: InputProps) => {
                 <Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource} className="resource-card">
                     <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource}`}>
                     <CardMedia
-                            image={require("../../images/Minion-video-icon.png")}
+                            image={require("../../images/Image-icon.png")}
                             title="Click to view the image!"
                         />
                         <CardContent>
@@ -90,7 +90,7 @@ const ResourceCard = (props: InputProps) => {
                 <Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource} className="resource-card">
                     <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource}`}>
                     <CardMedia
-                            image={require("../../images/Minion-video-icon.png")}
+                            image={require("../../images/PDF-icon.png")}
                             title="Click to view the pdf!"
                         />
                         <CardContent>

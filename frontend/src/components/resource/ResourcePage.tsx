@@ -9,6 +9,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useMrGFunctions from "../../hooks/useMrGFunctions"
+import Error from '../shared/Error'
 
 
 
@@ -144,7 +145,7 @@ const ResourcePage = ({ match }) => {
 
     if (error) {
         return (
-            <i>{error}</i>
+           <Error error={error}/> 
         )
     }
 

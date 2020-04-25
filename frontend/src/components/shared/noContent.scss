@@ -1,0 +1,23 @@
+.no-content-wrapper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 100px 24px 24px 24px;
+
+    h2 {
+        margin: 0;
+    }
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .loading-wrapper{
+        top: 345px;
+
+        img{
+            width: 130px;
+        }
+    }
+}

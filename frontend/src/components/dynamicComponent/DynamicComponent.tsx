@@ -8,6 +8,8 @@ import ResourceCard from '../resource/ResourceCard'
 import ResourcePage from '../resource/ResourcePage'
 import FolderCard from '../shared/FolderCard'
 import useCloudinaryFunctions from "../../hooks/useMrGFunctions"
+import NoContent from '../shared/NoContent';
+import Error from '../shared/Error';
 
 const DynamicComponent = ({ match }) => {
     const isCancelled = React.useRef(false)
@@ -76,7 +78,7 @@ const DynamicComponent = ({ match }) => {
 
     if (error) {
         return (
-            <i>{error}</i>
+           <Error error={error}/> 
         )
     }
 
@@ -108,7 +110,7 @@ const DynamicComponent = ({ match }) => {
                 }
 
                 {!loading && !isSubFoldersFound && !isFilesFound && <div className="no-content-found">
-                    <p>This folder is empty!</p>
+                    <NoContent />
                 </div>}
 
             </div>}

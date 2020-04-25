@@ -6,6 +6,8 @@ import Loading from '../shared/Loading';
 import FolderCard from '../shared/FolderCard'
 import useCloudinaryFunctions from "../../hooks/useMrGFunctions"
 import ResourceCard from '../resource/ResourceCard';
+import Error from '../shared/Error';
+import NoContent from '../shared/NoContent';
 
 const Home = ({ match }) => {
     const isCancelled = useRef(false)
@@ -65,14 +67,14 @@ const Home = ({ match }) => {
 
     if (error) {
         return (
-            <i>{error}</i>
+           <Error error={error}/> 
         )
     }
 
     return (
         <div className="content home-page">
             <div className="intro-section">
-                <img className="minion-gif-desktop" alt="minion" src={require("../../images/FoodMinion.gif")} />
+                <img className="minion-gif-desktop" alt="minion" src={require("../../images/new-food-minion.gif")} />
                 <img className="minion-gif-mobile" alt="minion" src={require("../../images/Maths-food-Minion-mobile.gif")} />
                 <div className="text-section">
                     <p>
@@ -105,28 +107,8 @@ const Home = ({ match }) => {
             }
 
             {!loading && !isSubFoldersFound && !isFolderContentFound && <div className="no-content-found">
-                <p>This folder is empty!</p>
+                <NoContent />
             </div>}
-
-
-            {/* {!loading &&
-                <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly">
-                    {subFolders && subFolders.map((subFolder: string, index: number) => {
-                        return (
-                            <FolderCard key={subFolder} folder={subFolder} url={match.url} index={index} />
-                        )
-                    })}
-                    {files && <div className="folder-content">
-                        <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly">
-                            {files.map((resource: string, index: number) => {
-                                return (
-                                    <ResourceCard key={index} resource={resource} matchUrl={match.url} index={index} />
-                                )
-                            })}
-                        </Box>
-                    </div>}
-                </Box>
-            } */}
 
         </div >
     )

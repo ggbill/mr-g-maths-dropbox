@@ -35,7 +35,7 @@ const ResourceBadge = (props: InputProps) => {
                     < Card key={props.resource} className="resource-badge">
                         <CardActionArea component={Link} to={generateLink()} onClick={props.setIsResourceBadgeClicked}>
                             <CardMedia
-                                image={require("../../images/Minion-video-icon.png")}
+                                image={require("../../images/Video-icon.png")}
                                 title="Click to view video!"
                             />
                             <CardContent>
@@ -57,7 +57,7 @@ const ResourceBadge = (props: InputProps) => {
                 < Card key={props.resource} className="resource-badge">
                     <CardActionArea component={Link} to={generateLink()} onClick={props.setIsResourceBadgeClicked}>
                         <CardMedia
-                            image={require("../../images/Minion-video-icon.png")}
+                            image={require("../../images/Audio-icon.png")}
                             title="Click to listen to the audio!"
                         />
                         <CardContent>
@@ -78,7 +78,7 @@ const ResourceBadge = (props: InputProps) => {
                 <Card key={props.resource} className="resource-badge">
                     <CardActionArea component={Link} to={generateLink()} onClick={props.setIsResourceBadgeClicked}>
                         <CardMedia
-                            image={require("../../images/Minion-video-icon.png")}
+                            image={require("../../images/Image-icon.png")}
                             title="Click to view the image!"
                         />
                         <CardContent>
@@ -99,7 +99,7 @@ const ResourceBadge = (props: InputProps) => {
                 <Card key={props.resource} className="resource-badge">
                     <CardActionArea component={Link} to={generateLink()} onClick={props.setIsResourceBadgeClicked}>
                         <CardMedia
-                            image={require("../../images/Minion-video-icon.png")}
+                            image={require("../../images/PDF-icon.png")}
                             title="Click to view the pdf!"
                         />
                         <CardContent>
