@@ -67,6 +67,11 @@ router.get('/file/:path', async (request: Request, response: Response) => {
         response.set({
             'Content-Type': `video/${fileExtension}`,
         })
+    } else if (fileExtension === "pdf") {
+            // console.log(`content-type: video/${fileExtension}`)
+        response.set({
+            'Content-Type': `application/${fileExtension}`,
+        })
     } else {
         // console.log(`content-type: application/${fileExtension}`)
         response.set({

@@ -96,7 +96,7 @@ const Home = ({ match }) => {
                     })}
                 </Box>
             }
-            {!loading && files &&
+            {/* {!loading && files &&
                 <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly">
                     {files.map((resource: string, index: number) => {
                         return (
@@ -104,7 +104,7 @@ const Home = ({ match }) => {
                         )
                     })}
                 </Box>
-            }
+            } */}
 
             {!loading && !isSubFoldersFound && !isFolderContentFound && <div className="no-content-found">
                 <NoContent />

@@ -55,7 +55,7 @@ const ResourcePage = ({ match }) => {
             .then((data: any) => {
                 if (!isCancelled.current) {
                     if (data) {
-                        // console.log(`data: ${JSON.stringify(data.contentType)}`)
+                        console.log(`data: ${JSON.stringify(data.contentType)}`)
                         // console.log(`blob: ${JSON.stringify(URL.createObjectURL(data.contentBody))}`)
                         setContentType(data.contentType)
                         setMediaBlobUrl(URL.createObjectURL(data.contentBody))
@@ -219,10 +219,11 @@ const ResourcePage = ({ match }) => {
                                                 <GetAppIcon />
                                             </Button>
                                         </a>
+                                        <img alt="placeholder pdf" src={require("../../images/PDF-icon.png")} />
                                         {/* <a href={mediaBlobUrl} download={`${match.url.split("resource/")[1]}`}>Download PDF</a> */}
-                                        <Document file={mediaBlobUrl}>
+                                        {/* <Document file={mediaBlobUrl}>
                                             <Page pageNumber={1} />
-                                        </Document>
+                                        </Document> */}
                                     </>
                                     :
                                     <object data={mediaBlobUrl} >
