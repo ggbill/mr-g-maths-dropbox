@@ -5,6 +5,7 @@ import VideocamIcon from '@material-ui/icons/Videocam';
 import ImageIcon from '@material-ui/icons/Image';
 import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import DescriptionIcon from '@material-ui/icons/Description';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
 import './resourceCard.scss';
 import useMrGFunctions from "../../hooks/useMrGFunctions"
 
@@ -25,10 +26,10 @@ const ResourceCard = (props: InputProps) => {
 
                     < Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource} className="resource-card">
                         <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource}`}>
-                        <CardMedia
-                            image={require("../../images/Video-icon.png")}
-                            title="Click to view the video!"
-                        />
+                            <CardMedia
+                                image={require("../../images/Video-icon.png")}
+                                title="Click to view the video!"
+                            />
                             <CardContent>
                                 <div className="resource-type-badge-wrapper video">
                                     <div className="resource-type-badge">
@@ -68,7 +69,7 @@ const ResourceCard = (props: InputProps) => {
             {mrGFunctions.isImageFormat(props.resource.split(".")[1]) &&
                 <Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource} className="resource-card">
                     <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource}`}>
-                    <CardMedia
+                        <CardMedia
                             image={require("../../images/Image-icon.png")}
                             title="Click to view the image!"
                         />
@@ -89,7 +90,7 @@ const ResourceCard = (props: InputProps) => {
             {mrGFunctions.isPDFFormat(props.resource.split(".")[1]) &&
                 <Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource} className="resource-card">
                     <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource}`}>
-                    <CardMedia
+                        <CardMedia
                             image={require("../../images/PDF-icon.png")}
                             title="Click to view the pdf!"
                         />
@@ -97,6 +98,31 @@ const ResourceCard = (props: InputProps) => {
                             <div className="resource-type-badge-wrapper pdf">
                                 <div className="resource-type-badge">
                                     <DescriptionIcon />
+                                </div>
+                            </div>
+                            <div className="card-title-wrapper">
+                                <span>{mrGFunctions.cleanFilename(props.resource)}</span>
+                            </div>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
+            }
+
+            {
+                !mrGFunctions.isVideoFormat(props.resource.split(".")[1]) &&
+                !mrGFunctions.isAudioFormat(props.resource.split(".")[1]) &&
+                !mrGFunctions.isImageFormat(props.resource.split(".")[1]) &&
+                !mrGFunctions.isPDFFormat(props.resource.split(".")[1]) &&
+                <Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource} className="resource-card">
+                    <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource}`}>
+                        <CardMedia
+                            image={require("../../images/Files-icon.png")}
+                            title="Click to view the file!"
+                        />
+                        <CardContent>
+                            <div className="resource-type-badge-wrapper file">
+                                <div className="resource-type-badge">
+                                    <AttachFileIcon />
                                 </div>
                             </div>
                             <div className="card-title-wrapper">

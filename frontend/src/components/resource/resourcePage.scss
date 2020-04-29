@@ -2,7 +2,8 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin-top: 24px;
+    max-width: 600px;
+    margin: 24px auto 0;
 
     &.audio {
         img {
@@ -64,8 +65,8 @@
         margin-bottom: 12px;
         height: 42px;
 
-        .MuivgIcon{
-            padding-right: 3px;
+        .MuiSvgIcon-root{
+            padding-left: 3px;
         }
     }
 

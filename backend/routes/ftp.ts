@@ -70,7 +70,7 @@ router.get('/file/:path', async (request: Request, response: Response) => {
     } else {
         // console.log(`content-type: application/${fileExtension}`)
         response.set({
-            'Content-Type': `application/${fileExtension}`,
+            'Content-Type': `application/octet-stream`,
         })
     }
 

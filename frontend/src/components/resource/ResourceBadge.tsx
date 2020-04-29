@@ -5,6 +5,7 @@ import VideocamIcon from '@material-ui/icons/Videocam';
 import ImageIcon from '@material-ui/icons/Image';
 import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import DescriptionIcon from '@material-ui/icons/Description';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
 import './resourceBadge.scss';
 import useCloudinaryFunctions from "../../hooks/useMrGFunctions"
 import useMrGFunctions from "../../hooks/useMrGFunctions"
@@ -106,6 +107,31 @@ const ResourceBadge = (props: InputProps) => {
                             <div className="resource-type-badge-wrapper pdf">
                                 <div className="resource-type-badge">
                                     <DescriptionIcon />
+                                </div>
+                            </div>
+                            <div className="card-title-wrapper">
+                                <span>{cloudinaryFunctions.cleanFilename(props.resource)}</span>
+                            </div>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
+            }
+
+{
+                !mrGFunctions.isVideoFormat(props.resource.split(".")[1]) &&
+                !mrGFunctions.isAudioFormat(props.resource.split(".")[1]) &&
+                !mrGFunctions.isImageFormat(props.resource.split(".")[1]) &&
+                !mrGFunctions.isPDFFormat(props.resource.split(".")[1]) &&
+                <Card key={props.resource} className="resource-badge">
+                    <CardActionArea component={Link} to={generateLink()} onClick={props.setIsResourceBadgeClicked}>
+                        <CardMedia
+                            image={require("../../images/Files-icon.png")}
+                            title="Click to view the pdf!"
+                        />
+                        <CardContent>
+                            <div className="resource-type-badge-wrapper file">
+                                <div className="resource-type-badge">
+                                    <AttachFileIcon />
                                 </div>
                             </div>
                             <div className="card-title-wrapper">

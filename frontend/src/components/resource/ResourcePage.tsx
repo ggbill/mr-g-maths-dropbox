@@ -56,7 +56,7 @@ const ResourcePage = ({ match }) => {
                 if (!isCancelled.current) {
                     if (data) {
                         // console.log(`data: ${JSON.stringify(data.contentType)}`)
-                        console.log(`blob: ${JSON.stringify(URL.createObjectURL(data.contentBody))}`)
+                        // console.log(`blob: ${JSON.stringify(URL.createObjectURL(data.contentBody))}`)
                         setContentType(data.contentType)
                         setMediaBlobUrl(URL.createObjectURL(data.contentBody))
 
@@ -185,7 +185,7 @@ const ResourcePage = ({ match }) => {
                         <>
                             <h2>{generateBreadcrumbs()}</h2>
                             <div className="resource-wrapper audio">
-                                <img alt="placeholder audio" src={require("../../images/Minion-video-icon.png")} />
+                                <img alt="placeholder audio" src={require("../../images/Audio-icon.png")} />
                                 <audio
                                     src={mediaBlobUrl}
                                     controls={true}
@@ -213,23 +213,43 @@ const ResourcePage = ({ match }) => {
 
                                 {(isMobile || isTablet) ?
                                     <>
+                                        <a href={mediaBlobUrl} download={`${match.url.split("resource/")[1]}`}>
+                                            <Button className="download-button" variant="contained">
+                                                <span>Download PDF</span>
+                                                <GetAppIcon />
+                                            </Button>
+                                        </a>
                                         {/* <a href={mediaBlobUrl} download={`${match.url.split("resource/")[1]}`}>Download PDF</a> */}
                                         <Document file={mediaBlobUrl}>
                                             <Page pageNumber={1} />
                                         </Document>
-                                        <a href={mediaBlobUrl} download={`${match.url.split("resource/")[1]}`}>
-                                            <Button className="download-button" variant="contained">
-                                                <GetAppIcon />
-                                                <span>Download PDF</span>
-                                            </Button>
-                                        </a>
-
                                     </>
                                     :
                                     <object data={mediaBlobUrl} >
                                         Your browser does not support the pdf viewer element.
                                     </object>
                                 }
+                            </div>
+                        </>
+                    }
+
+                    {
+                        !loading &&
+                        !mrGFunctions.isVideoFormat(contentType.split("/")[1]) &&
+                        !mrGFunctions.isAudioFormat(contentType.split("/")[1]) &&
+                        !mrGFunctions.isImageFormat(contentType.split("/")[1]) &&
+                        !mrGFunctions.isPDFFormat(contentType.split("/")[1]) &&
+                        <>
+                            <h2>{generateBreadcrumbs()}</h2>
+                            <div className="resource-wrapper file">
+                                <a href={mediaBlobUrl} download={`${match.url.split("resource/")[1]}`}>
+                                    <Button className="download-button" variant="contained">
+                                        <span>Download File</span>
+                                        <GetAppIcon />
+                                    </Button>
+                                </a>
+                                <img alt="placeholder audio" src={require("../../images/Files-icon.png")} />
+
                             </div>
                         </>
                     }

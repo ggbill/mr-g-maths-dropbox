@@ -30,36 +30,45 @@ const useFetch = (collection: string) => {
 
         //TODO need to split response into response type and payload to differentiate between file types and folders
         return fetch(url, options)
-            .then( async response => {
+            .then(async response => {
                 for (var pair of response.headers.entries()) {
-                    // console.log(`${pair[0]}: ${pair[1]}`)
+                    console.log(`${pair[0]}: ${pair[1]}`)
 
                     if (pair[0] === "content-type") {
-                        if (mrGFunctions.isVideoFormat(pair[1].split("/")[1]) ||
-                            mrGFunctions.isImageFormat(pair[1].split("/")[1]) ||
-                            mrGFunctions.isAudioFormat(pair[1].split("/")[1])    
-                        ) {
+                        if (pair[1].includes("application/json")){
+                            return ({
+                                contentType: pair[1],
+                                contentBody: await response.json()
+                            })
+                        }else{
                             return ({
                                 contentType: pair[1],
                                 contentBody: await response.blob()
                             })
-                        } else if (mrGFunctions.isPDFFormat(pair[1].split("/")[1])){
-                            return ({
-                                contentType: pair[1],
-                                contentBody: new Blob(
-                                    [await response.blob()], 
-                                    {type: 'application/pdf'})
-                            })
-                            // return ({
-                            //     contentType: pair[1],
-                            //     contentBody: await response.blob()
-                            // })
-                        }else {
-                            return ({
-                                contentType: pair[1],
-                                contentBody: await response.json()
-                            })                            
                         }
+                        
+                        // if (mrGFunctions.isVideoFormat(pair[1].split("/")[1]) ||
+                        //     mrGFunctions.isImageFormat(pair[1].split("/")[1]) ||
+                        //     mrGFunctions.isAudioFormat(pair[1].split("/")[1])    
+                        // ) {
+                        //     return ({
+                        //         contentType: pair[1],
+                        //         contentBody: await response.blob()
+                        //     })
+                        // } else if (mrGFunctions.isPDFFormat(pair[1].split("/")[1])){
+                        //     return ({
+                        //         contentType: pair[1],
+                        //         contentBody: new Blob(
+                        //             [await response.blob()], 
+                        //             {type: 'application/pdf'})
+                        //     })
+                        // }else {
+                        //     // console.log("else")
+                        //     return ({
+                        //         contentType: pair[1],
+                        //         contentBody: await response.blob()
+                        //     })                            
+                        // }
                     }
                 }
             })

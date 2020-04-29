@@ -76,6 +76,11 @@
                 background-color: #358600;
             }
         }
+        &.file {
+            .resource-type-badge {
+                background-color: #F18F01;
+            }
+        }
     }
 }
 
