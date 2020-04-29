@@ -5,7 +5,7 @@ import VideocamIcon from '@material-ui/icons/Videocam';
 import ImageIcon from '@material-ui/icons/Image';
 import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import DescriptionIcon from '@material-ui/icons/Description';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
+import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import './resourceBadge.scss';
 import useCloudinaryFunctions from "../../hooks/useMrGFunctions"
 import useMrGFunctions from "../../hooks/useMrGFunctions"
@@ -106,7 +106,7 @@ const ResourceBadge = (props: InputProps) => {
                         <CardContent>
                             <div className="resource-type-badge-wrapper pdf">
                                 <div className="resource-type-badge">
-                                    <DescriptionIcon />
+                                    <PictureAsPdfIcon />
                                 </div>
                             </div>
                             <div className="card-title-wrapper">
@@ -131,7 +131,7 @@ const ResourceBadge = (props: InputProps) => {
                         <CardContent>
                             <div className="resource-type-badge-wrapper file">
                                 <div className="resource-type-badge">
-                                    <AttachFileIcon />
+                                    <DescriptionIcon />
                                 </div>
                             </div>
                             <div className="card-title-wrapper">
