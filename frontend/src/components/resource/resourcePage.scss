@@ -73,33 +73,11 @@
         background-color: #2b6902;
 
     }
-
-
 }
-
 
 span.intro-text {
     padding: 12px 0;
 }
-
-// /* max-width constrains the width of our carousel to 550, but shrinks on small devices */
-// .carousel {
-//     max-width: 600px;
-//     margin: auto;
-// }
-
-// /* gives us the illusion of a "centered" slide */
-// .carousel__slider {
-//     padding: 0 30%;
-
-//     /* gives us the illusion of spaces between the slides */
-//     .carousel__inner-slide {
-//         width: calc(100% - 40px);
-//         height: calc(100% - 40px);
-//         left: 10px;
-//         top: 10px;
-//     }
-// }
 
 .carousel-root {
     max-width: 600px;
@@ -110,10 +88,12 @@ span.intro-text {
         &.carousel-slider {
             .control-arrow {
                 background: black;
-                height: 41px;
+                height: 55px;
                 border-radius: 4px;
                 opacity: 1;
                 margin: auto 0;
+                padding: 10px;
+                border: 1px solid white;
             }
 
             .control-arrow:hover {
