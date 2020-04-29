@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import useFetch from "../../hooks/useFetch"
-// import { Video, Image } from 'cloudinary-react'
 import Loading from '../shared/Loading'
 import './resourcePage.scss'
 import useCloudinaryFunctions from "../../hooks/useMrGFunctions"
@@ -10,8 +9,13 @@ import { Carousel } from 'react-responsive-carousel';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useMrGFunctions from "../../hooks/useMrGFunctions"
 import Error from '../shared/Error'
+import { pdfjs, Document, Page } from 'react-pdf';
+import { Button } from '@material-ui/core'
+import GetAppIcon from '@material-ui/icons/GetApp';
 
 
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const ResourcePage = ({ match }) => {
     const isCancelled = React.useRef(false)
@@ -52,6 +56,7 @@ const ResourcePage = ({ match }) => {
                 if (!isCancelled.current) {
                     if (data) {
                         // console.log(`data: ${JSON.stringify(data.contentType)}`)
+                        console.log(`blob: ${JSON.stringify(URL.createObjectURL(data.contentBody))}`)
                         setContentType(data.contentType)
                         setMediaBlobUrl(URL.createObjectURL(data.contentBody))
 
@@ -145,7 +150,7 @@ const ResourcePage = ({ match }) => {
 
     if (error) {
         return (
-           <Error error={error}/> 
+            <Error error={error} />
         )
     }
 
@@ -205,9 +210,26 @@ const ResourcePage = ({ match }) => {
                         <>
                             <h2>{generateBreadcrumbs()}</h2>
                             <div className="resource-wrapper">
-                                <object data={mediaBlobUrl} >
-                                    Your browser does not support the pdf viewer element.
-                                </object>
+
+                                {(isMobile || isTablet) ?
+                                    <>
+                                        {/* <a href={mediaBlobUrl} download={`${match.url.split("resource/")[1]}`}>Download PDF</a> */}
+                                        <Document file={mediaBlobUrl}>
+                                            <Page pageNumber={1} />
+                                        </Document>
+                                        <a href={mediaBlobUrl} download={`${match.url.split("resource/")[1]}`}>
+                                            <Button className="download-button" variant="contained">
+                                                <GetAppIcon />
+                                                <span>Download PDF</span>
+                                            </Button>
+                                        </a>
+
+                                    </>
+                                    :
+                                    <object data={mediaBlobUrl} >
+                                        Your browser does not support the pdf viewer element.
+                                    </object>
+                                }
                             </div>
                         </>
                     }
@@ -221,9 +243,8 @@ const ResourcePage = ({ match }) => {
                             infiniteLoop={true}
                             showStatus={false}
                             showIndicators={false}
-                            showArrows={isMobile || isTablet ? false : true}
-                            swipeScrollTolerance={8}
-
+                            swipeable={false}
+                            showArrows={true}
                         >
                             {siblingResources.map((siblingResource, index) => {
                                 return (

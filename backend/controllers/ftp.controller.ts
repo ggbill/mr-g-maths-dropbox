@@ -44,8 +44,6 @@ export namespace FtpController {
 
                 });
             });
-
-
         });
     }
 }

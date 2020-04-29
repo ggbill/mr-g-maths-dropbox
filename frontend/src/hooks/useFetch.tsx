@@ -46,8 +46,14 @@ const useFetch = (collection: string) => {
                         } else if (mrGFunctions.isPDFFormat(pair[1].split("/")[1])){
                             return ({
                                 contentType: pair[1],
-                                contentBody: await response.blob()
+                                contentBody: new Blob(
+                                    [await response.blob()], 
+                                    {type: 'application/pdf'})
                             })
+                            // return ({
+                            //     contentType: pair[1],
+                            //     contentBody: await response.blob()
+                            // })
                         }else {
                             return ({
                                 contentType: pair[1],

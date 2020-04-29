@@ -34,6 +34,7 @@
     "react-bootstrap": "^1.0.1",
     "react-ga": "^2.7.0",
     "react-https-redirect": "^1.1.0",
+    "react-pdf": "^4.1.0",
     "react-responsive-carousel": "^3.2.4",
     "react-router-dom": "^5.1.2",
     "react-router-ga": "^1.2.3",
