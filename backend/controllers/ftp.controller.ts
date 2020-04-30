@@ -21,7 +21,7 @@ export namespace FtpController {
             let files: string[] = []
 
             client.on('ready', function () {
-                client.list(`/content${folderName}`, function (error, list) {
+                client.list(`/MrGMathsContent${folderName}`, function (error, list) {
                     if (error) {
                         console.log(error)
                         client.end();

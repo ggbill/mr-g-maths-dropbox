@@ -90,7 +90,7 @@ router.get('/file/:path', async (request: Request, response: Response) => {
     }
 
     client.on('ready', function () {
-        client.get(`/content${request.params.path}`, function (error, stream) {
+        client.get(`/MrGMathsContent${request.params.path}`, function (error, stream) {
             if (error) {
                 client.end();
                 response.status(500);
