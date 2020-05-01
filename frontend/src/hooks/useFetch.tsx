@@ -1,5 +1,3 @@
-import useMrGFunctions from "./useMrGFunctions"
-
 interface Options {
     method: string,
     headers: {},
@@ -7,7 +5,6 @@ interface Options {
 }
 
 const useFetch = (collection: string) => {
-    const mrGFunctions = useMrGFunctions()
     const url = process.env.PUBLIC_URL || "http://localhost:8080"
     const stub = `${url}/${collection}`
 
@@ -32,43 +29,24 @@ const useFetch = (collection: string) => {
         return fetch(url, options)
             .then(async response => {
                 for (var pair of response.headers.entries()) {
-                    console.log(`${pair[0]}: ${pair[1]}`)
+                    // console.log(`${pair[0]}: ${pair[1]}`)
 
-                    if (pair[0] === "content-type") {
-                        if (pair[1].includes("application/json")){
-                            return ({
-                                contentType: pair[1],
-                                contentBody: await response.json()
-                            })
-                        }else{
-                            return ({
-                                contentType: pair[1],
-                                contentBody: await response.blob()
-                            })
+                    if (response.ok){
+                        if (pair[0] === "content-type") {
+                            if (pair[1].includes("application/json")){
+                                return ({
+                                    contentType: pair[1],
+                                    contentBody: await response.json()
+                                })
+                            }else{
+                                return ({
+                                    contentType: pair[1],
+                                    contentBody: await response.blob()
+                                })
+                            }
                         }
-                        
-                        // if (mrGFunctions.isVideoFormat(pair[1].split("/")[1]) ||
-                        //     mrGFunctions.isImageFormat(pair[1].split("/")[1]) ||
-                        //     mrGFunctions.isAudioFormat(pair[1].split("/")[1])    
-                        // ) {
-                        //     return ({
-                        //         contentType: pair[1],
-                        //         contentBody: await response.blob()
-                        //     })
-                        // } else if (mrGFunctions.isPDFFormat(pair[1].split("/")[1])){
-                        //     return ({
-                        //         contentType: pair[1],
-                        //         contentBody: new Blob(
-                        //             [await response.blob()], 
-                        //             {type: 'application/pdf'})
-                        //     })
-                        // }else {
-                        //     // console.log("else")
-                        //     return ({
-                        //         contentType: pair[1],
-                        //         contentBody: await response.blob()
-                        //     })                            
-                        // }
+                    }else{
+                        throw new Error(response.statusText);
                     }
                 }
             })

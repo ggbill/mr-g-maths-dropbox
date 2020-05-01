@@ -9,13 +9,8 @@ import { Carousel } from 'react-responsive-carousel';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useMrGFunctions from "../../hooks/useMrGFunctions"
 import Error from '../shared/Error'
-import { pdfjs, Document, Page } from 'react-pdf';
 import { Button } from '@material-ui/core'
 import GetAppIcon from '@material-ui/icons/GetApp';
-
-
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const ResourcePage = ({ match }) => {
     const isCancelled = React.useRef(false)
@@ -55,7 +50,7 @@ const ResourcePage = ({ match }) => {
             .then((data: any) => {
                 if (!isCancelled.current) {
                     if (data) {
-                        console.log(`data: ${JSON.stringify(data.contentType)}`)
+                        // console.log(`data: ${JSON.stringify(data.contentType)}`)
                         // console.log(`blob: ${JSON.stringify(URL.createObjectURL(data.contentBody))}`)
                         setContentType(data.contentType)
                         setMediaBlobUrl(URL.createObjectURL(data.contentBody))
@@ -129,6 +124,8 @@ const ResourcePage = ({ match }) => {
     const handleIsResourceBadgeClicked = () => {
         setIsResourceBadgeClicked(true)
     };
+
+    
 
     //only do this when resource badge is clicked (to reload page)
     React.useEffect(() => {
@@ -220,10 +217,6 @@ const ResourcePage = ({ match }) => {
                                             </Button>
                                         </a>
                                         <img alt="placeholder pdf" src={require("../../images/PDF-icon.png")} />
-                                        {/* <a href={mediaBlobUrl} download={`${match.url.split("resource/")[1]}`}>Download PDF</a> */}
-                                        {/* <Document file={mediaBlobUrl}>
-                                            <Page pageNumber={1} />
-                                        </Document> */}
                                     </>
                                     :
                                     <object data={mediaBlobUrl} >

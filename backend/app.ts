@@ -7,9 +7,11 @@ import ftpRouter from './routes/ftp';
 const path = require('path');
 const shrinkRay = require('shrink-ray-current');
 
-if (process.env.NODE_ENV !== 'production') {
+// console.log(`process.env.NODE_ENV: ${process.env.NODE_ENV}`)
+
+// if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
-}
+// }
 
 const app = express();
 

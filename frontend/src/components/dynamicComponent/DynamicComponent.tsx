@@ -25,6 +25,7 @@ const DynamicComponent = ({ match }) => {
     const getFolderContent = (): void => {
         setLoading(true)
         let encodedMatchUrl = match.url.replace(/\//g, "%2F")
+
         ftpApi.get(`folder-content/${encodedMatchUrl}`)
             .then((data: any) => {
                 // console.log(`data: ${JSON.stringify(data)}`)
@@ -56,6 +57,7 @@ const DynamicComponent = ({ match }) => {
                     setLoading(false)
                 }
             })
+
     }
 
     const generateBreadcrumbs = (): any => {

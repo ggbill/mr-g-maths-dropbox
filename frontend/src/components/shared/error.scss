@@ -1,6 +1,9 @@
 .error-wrapper {
+    position: relative;
+    top: 100px;
     text-align: center;
     padding: 24px;
+    min-height: 375px;
 
     h2 {
         margin: 0;
@@ -10,8 +13,6 @@
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
     .error-wrapper{
-        position: relative;
-        top: 100px;
 
         img{
             width: 130px;

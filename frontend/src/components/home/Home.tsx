@@ -5,7 +5,6 @@ import { Box } from '@material-ui/core'
 import Loading from '../shared/Loading';
 import FolderCard from '../shared/FolderCard'
 import useCloudinaryFunctions from "../../hooks/useMrGFunctions"
-import ResourceCard from '../resource/ResourceCard';
 import Error from '../shared/Error';
 import NoContent from '../shared/NoContent';
 
@@ -16,7 +15,6 @@ const Home = ({ match }) => {
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string>("")
     const [subFolders, setSubFolders] = useState<any>(null)
-    const [files, setFiles] = useState<any>(null)
     const [isFolderContentFound, setIsFilesFound] = useState<boolean>(true)
     const [isSubFoldersFound, setIsSubFoldersFound] = useState<boolean>(true)
 
@@ -32,13 +30,6 @@ const Home = ({ match }) => {
                             setSubFolders(data.contentBody.subFolders)
                         } else {
                             setIsSubFoldersFound(false)
-                        }
-
-                        if (data.contentBody.files.length) {
-                            data.contentBody.files = cloudinaryFunctions.sortByPrefix(data.contentBody.files)
-                            setFiles(data.contentBody.files)
-                        } else {
-                            setIsFilesFound(false)
                         }
                     } else {
                         setIsFilesFound(false)
@@ -96,15 +87,6 @@ const Home = ({ match }) => {
                     })}
                 </Box>
             }
-            {/* {!loading && files &&
-                <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly">
-                    {files.map((resource: string, index: number) => {
-                        return (
-                            <ResourceCard key={index} resource={resource} matchUrl={match.url} index={index} />
-                        )
-                    })}
-                </Box>
-            } */}
 
             {!loading && !isSubFoldersFound && !isFolderContentFound && <div className="no-content-found">
                 <NoContent />
