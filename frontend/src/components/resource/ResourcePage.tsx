@@ -11,18 +11,23 @@ import useMrGFunctions from "../../hooks/useMrGFunctions"
 import Error from '../shared/Error'
 import { Button } from '@material-ui/core'
 import GetAppIcon from '@material-ui/icons/GetApp';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const ResourcePage = ({ match }) => {
     const isCancelled = React.useRef(false)
     const ftpApi = useFetch("ftp")
     const cloudinaryFunctions = useCloudinaryFunctions()
     const [loading, setLoading] = useState<boolean>(false)
+    const [carouselLoading, setCarouselLoading] = useState<boolean>(false)
     const [error, setError] = useState<string>("")
     const [siblingResources, setSiblingResources] = useState<any>([])
     const [resourceIndex, setResourceIndex] = useState<number>(0)
     const [isResourceBadgeClicked, setIsResourceBadgeClicked] = useState<boolean>(false)
     const [contentType, setContentType] = useState<string>("")
     const [mediaBlobUrl, setMediaBlobUrl] = useState<any>()
+    const [isDownloadInProgress, setIsDownloadInProgress] = useState<boolean>(false)
+    const [bytesReceived, setBytesReceived] = useState<number>(0)
+    const [bytesToDownload, setBytesToDownload] = useState<number>(0)
 
     const isMobile = useMediaQuery('(max-width:400px)');
     const isTablet = useMediaQuery('(max-width:600px) and (min-width: 401px)');
@@ -42,38 +47,98 @@ const ResourcePage = ({ match }) => {
         }
     }
 
+    // TODO IMPLEMENT THIS IN CUSTOM HOOK
     const getFile = (): void => {
+        const url = process.env.PUBLIC_URL || "http://localhost:8080"
         let filePath = match.url.replace("resource/", "")
         let encodedFilePath = filePath.replace(/\//g, "%2F")
         setLoading(true)
-        ftpApi.get(`file/${encodedFilePath}`)
-            .then((data: any) => {
+        fetch(`${url}/ftp/file/${encodedFilePath}`)
+            .then(async (response: any) => {
                 if (!isCancelled.current) {
-                    if (data) {
-                        // console.log(`data: ${JSON.stringify(data.contentType)}`)
-                        // console.log(`blob: ${JSON.stringify(URL.createObjectURL(data.contentBody))}`)
-                        setContentType(data.contentType)
-                        setMediaBlobUrl(URL.createObjectURL(data.contentBody))
+                    for (var pair of response.headers.entries()) {
+                        // console.log(`${pair[0]} - ${pair[1]}`)
+                        if (response.ok) {
+                            if (pair[0] === "content-type") {
+                                if (pair[1].includes("application/json")) {
+                                    return ({
+                                        contentType: pair[1],
+                                        contentBody: await response.json()
+                                    })
+                                } else {
+                                    setBytesToDownload(Number(response.headers.get('content-length')));
+                                    // console.log(`total: ${Number(response.headers.get('content-length'))}`)
+                                    const reader = response.body.getReader();
+                                    // let bytesReceived = 0;
+                                    let chunks: any = [];
+                                    while (true) {
+                                        const result = await reader.read();
+                                        setIsDownloadInProgress(true)
 
-                        let filepathSplit = filePath.split("/")
-                        let filename = filepathSplit[filepathSplit.length - 1]
-                        // console.log(`filepath: ${filepathSplit[filepathSplit.length-1]}`)
-                        getSiblingResources(filename)
+                                        if (result.done) {
+                                            console.log('Fetch complete');
+                                            setIsDownloadInProgress(false)
+                                            setBytesReceived(0)
+                                            setIsResourceBadgeClicked(false)
+                                            setLoading(false)
+                                            setContentType(pair[1])
+                                            setMediaBlobUrl(URL.createObjectURL(new Blob(chunks)))
+                                            let filepathSplit = filePath.split("/")
+                                            let filename = filepathSplit[filepathSplit.length - 1]
+                                            getSiblingResources(filename)
+                                            break;
+                                        } else {
+                                            chunks.push(result.value);
+                                            setBytesReceived(bytesReceived => bytesReceived + result.value.length)
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            console.log(response.status)
+                            setError(response.status)
+                            setLoading(false)
+                        }
                     }
-                    setLoading(false)
-                    setIsResourceBadgeClicked(false)
                 }
             })
-            .catch((err: Error) => {
-                console.log("we got an error.")
-                console.log(err)
-                setError(err.message)
-                setLoading(false)
-            })
+
+            .catch(err => {
+                if (!isCancelled.current) {
+                    console.log(err)
+                    setError(err.message)
+                    setLoading(false)
+                }
+            });
     }
+    // const getFile = (): void => {
+    //     let filePath = match.url.replace("resource/", "")
+    //     let encodedFilePath = filePath.replace(/\//g, "%2F")
+    //     setLoading(true)
+    //     ftpApi.get(`file/${encodedFilePath}`)
+    //         .then((data: any) => {
+    //             if (!isCancelled.current) {
+    //                 if (data) {
+    //                     setContentType(data.contentType)
+    //                     setMediaBlobUrl(URL.createObjectURL(data.contentBody))
+    //                     let filepathSplit = filePath.split("/")
+    //                     let filename = filepathSplit[filepathSplit.length - 1]
+    //                     getSiblingResources(filename)
+    //                 }
+    //                 setLoading(false)
+    //                 setIsResourceBadgeClicked(false)
+    //             }
+    //         })
+    //         .catch((err: Error) => {
+    //             console.log("we got an error.")
+    //             console.log(err)
+    //             setError(err.message)
+    //             setLoading(false)
+    //         })
+    // }
 
     const getSiblingResources = (filename: string): void => {
-        setLoading(true)
+        setCarouselLoading(true)
         let encodedMatchUrl = match.url.replace(/\//g, "%2F")
         ftpApi.get(`folder-content/${encodedMatchUrl.replace(`%2Fresource%2F${filename}`, "")}`)
             .then((data: any) => {
@@ -82,10 +147,8 @@ const ResourcePage = ({ match }) => {
                     if (data) {
                         if (data.contentBody.files.length) {
                             data.contentBody.files = cloudinaryFunctions.sortByPrefix(data.contentBody.files)
-
                             //filter the current video from the siblings list
                             let filteredArray = data.contentBody.files.filter(file => file !== filename)
-                            // console.log(JSON.stringify(filteredArray))
                             setSiblingResources(filteredArray)
 
                             //find the index number of the current video
@@ -94,19 +157,18 @@ const ResourcePage = ({ match }) => {
                                     setResourceIndex(index)
                                 }
                             })
-
                         }
                     } else {
                         setError("No data found.")
                     }
-                    setLoading(false)
+                    setCarouselLoading(false)
                 }
             })
             .catch((err: Error) => {
                 if (!isCancelled.current) {
                     console.log(err)
                     setError(err.message)
-                    setLoading(false)
+                    setCarouselLoading(false)
                 }
             })
     }
@@ -122,10 +184,11 @@ const ResourcePage = ({ match }) => {
     }
 
     const handleIsResourceBadgeClicked = () => {
+        console.log("setIsResourceBadgeClicked(true)")
         setIsResourceBadgeClicked(true)
     };
 
-    
+
 
     //only do this when resource badge is clicked (to reload page)
     React.useEffect(() => {
@@ -159,7 +222,11 @@ const ResourcePage = ({ match }) => {
                     {loading &&
                         <>
                             <h2>{generateBreadcrumbs()}</h2>
-                            <Loading />
+                            <Loading
+                                isDownloadInProgress={isDownloadInProgress}
+                                bytesReceived={bytesReceived}
+                                bytesToDownload={bytesToDownload}
+                            />
                         </>
                     }
 
@@ -248,7 +315,7 @@ const ResourcePage = ({ match }) => {
                         </>
                     }
 
-                    {!loading && siblingResources &&
+                    {!carouselLoading && siblingResources &&
                         <Carousel
                             showThumbs={false}
                             selectedItem={resourceIndex}
@@ -267,6 +334,15 @@ const ResourcePage = ({ match }) => {
                             })}
                         </Carousel>
                     }
+
+                    {carouselLoading &&
+                        <div className="carousel-loading-wrapper">
+                            <CircularProgress />
+                        </div>
+                    }
+
+
+
                 </div>
             }
         </>

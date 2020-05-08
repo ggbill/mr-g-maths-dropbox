@@ -7,8 +7,17 @@
     padding: 100px 24px 24px 24px;
     width: 200px;
 
-    h2 {
+    h2, h3 {
         margin: 0;
+    }
+
+
+    .MuiCircularProgress-root{
+        margin-top: 12px;
+    }
+
+    .MuiCircularProgress-colorPrimary{
+        color: #3cb8e7;
     }
 }
 

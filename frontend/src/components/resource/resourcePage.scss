@@ -107,3 +107,14 @@ span.intro-text {
         }
     }
 }
+
+.carousel-loading-wrapper{
+    max-width: 600px;
+    margin: 24px auto;
+    text-align: center;
+
+    .MuiCircularProgress-colorPrimary{
+        color: #3cb8e7;
+    }
+}
+

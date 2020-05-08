@@ -20,7 +20,7 @@ const Home = ({ match }) => {
 
     const getFolderContent = (): void => {
         setLoading(true)
-         ftpApi.get("folder-content/%2F")
+        ftpApi.get("folder-content/%2F")
             .then((data: any) => {
                 // console.log(`data: ${JSON.stringify(data)}`)
                 if (!isCancelled.current) {
@@ -33,7 +33,7 @@ const Home = ({ match }) => {
                         }
                     } else {
                         setIsFilesFound(false)
-                        setIsSubFoldersFound(false)  
+                        setIsSubFoldersFound(false)
                     }
                     setLoading(false)
                 }
@@ -58,7 +58,7 @@ const Home = ({ match }) => {
 
     if (error) {
         return (
-           <Error error={error}/> 
+            <Error error={error} />
         )
     }
 
@@ -75,7 +75,11 @@ const Home = ({ match }) => {
             </div>
 
             {loading &&
-                <Loading />
+                <Loading
+                    isDownloadInProgress={false}
+                    bytesReceived={0}
+                    bytesToDownload={0}
+                />
             }
 
             {!loading && subFolders &&

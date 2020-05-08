@@ -24,28 +24,42 @@ const useFetch = (collection: string) => {
             options.body = JSON.stringify(body)
         }
 
-
-        //TODO need to split response into response type and payload to differentiate between file types and folders
         return fetch(url, options)
-            .then(async response => {
+            .then(async (response: any) => {
                 for (var pair of response.headers.entries()) {
                     // console.log(`${pair[0]}: ${pair[1]}`)
 
-                    if (response.ok){
+                    if (response.ok) {
                         if (pair[0] === "content-type") {
-                            if (pair[1].includes("application/json")){
+                            if (pair[1].includes("application/json")) {
                                 return ({
                                     contentType: pair[1],
                                     contentBody: await response.json()
                                 })
-                            }else{
-                                return ({
-                                    contentType: pair[1],
-                                    contentBody: await response.blob()
-                                })
+                            } else {
+
+                                const total = Number(response.headers.get('content-length'));
+
+                                const reader = response.body.getReader();
+                                let bytesReceived = 0;
+                                let chunks: any = [];
+                                while (true) {
+                                    const result = await reader.read();
+                                    if (result.done) {
+                                        console.log('Fetch complete');
+
+                                        return ({
+                                            contentType: pair[1],
+                                            contentBody: new Blob(chunks)
+                                        })
+                                    }
+                                    chunks.push(result.value);
+                                    bytesReceived += result.value.length;
+                                    // console.log('Received', bytesReceived, 'bytes of data so far');
+                                }
                             }
                         }
-                    }else{
+                    } else {
                         throw new Error(response.statusText);
                     }
                 }
@@ -57,7 +71,6 @@ const useFetch = (collection: string) => {
     };
 
     const get = id => {
-        // console.log(`useFetch get: ${id}`)
         const url = `${stub}${id ? `/${id}` : ""}`;
         return customFetch(url, "GET", null, defaultHeader);
     };

@@ -2,7 +2,7 @@ export namespace FtpController {
 
     var Client = require('ftp');
     require('dotenv').config();
-    
+
     let ftpHost = process.env.FTP_HOST
     let ftpUsername = process.env.FTP_USERNAME
     let ftpPassword = process.env.FTP_PASSWORD
@@ -13,30 +13,17 @@ export namespace FtpController {
 
             var client = new Client();
 
-            try {
-                client.connect({
-                    host: ftpHost,
-                    user: ftpUsername,
-                    password: ftpPassword,
-                    connTimeout: 60000,
-                    pasvTimeout: 60000,
-                });
-            } catch (err) {
-                console.error("Error: ", err)
-                reject(err)
-            }
+            client.connect({
+                host: ftpHost,
+                user: ftpUsername,
+                password: ftpPassword
+            });
 
             let subFolders: string[] = []
             let files: string[] = []
 
             client.on('ready', function () {
                 client.list(`/${ftpRootFolder}${folderName}`, function (error, list) {
-                    if (error) {
-                        console.log(error)
-                        client.end();
-                        reject(error)
-                    }
-
                     if (list) {
                         list.forEach(folderContentItem => {
                             if (folderContentItem.type === "-") {
@@ -50,12 +37,15 @@ export namespace FtpController {
                     }
                     client.end();
                     resolve({ subFolders: subFolders, files: files })
-
                 });
             });
 
             client.on('error', (error: any) => {
-                reject(error)
+                client.end();
+
+                if (error.code){
+                    reject(error)
+                }              
             });
         });
     }

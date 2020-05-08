@@ -70,7 +70,7 @@ const DynamicComponent = ({ match }) => {
     }
 
     React.useEffect(() => {
-        getFolderContent()
+            getFolderContent()        
 
         return () => {
             isCancelled.current = true;
@@ -89,7 +89,11 @@ const DynamicComponent = ({ match }) => {
             {match.isExact && <div className="content">
                 <h2>{generateBreadcrumbs()}</h2>
                 {loading &&
-                    <Loading />
+                    <Loading
+                        isDownloadInProgress={false}
+                        bytesReceived={0}
+                        bytesToDownload={0}
+                    />
                 }
 
                 {!loading && subFolders &&

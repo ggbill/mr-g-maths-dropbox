@@ -18,8 +18,8 @@ const FolderCard = (props: InputProps) => {
     return (
         <>
             {props.url === "/" ?
-                <Card style={{ animationDelay: `${props.index * 0.1}s` }} className="folder-card">
-                    <CardActionArea component={Link} to={`${props.url}${props.folder}`}>
+                <Card style={{ animationDelay: `${props.index * 0.1}s` }}  className="folder-card">
+                    <CardActionArea component={Link} to={`${props.url}${props.folder}`} >
                         <CardContent>
                             {/* <span className="folder-label">{props.folder.name.replace(/_/g, " ")}</span> */}
                             <span className="folder-label">{cloudinaryFunctions.cleanFolderName(props.folder)}</span>
@@ -27,7 +27,7 @@ const FolderCard = (props: InputProps) => {
                     </CardActionArea>
                 </Card> :
                 <Card style={{ animationDelay: `${props.index * 0.1}s` }} className="folder-card">
-                    <CardActionArea component={Link} to={`${props.url}/${props.folder}`}>
+                    <CardActionArea component={Link} to={`${props.url}/${props.folder}`} >
                         <CardContent>
                             <span className="folder-label">{cloudinaryFunctions.cleanFolderName(props.folder)}</span>
                         </CardContent>
