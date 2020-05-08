@@ -65,39 +65,42 @@ const ResourcePage = ({ match }) => {
                                         contentBody: await response.json()
                                     })
                                 } else {
-                                    // setBytesToDownload(Number(response.headers.get('content-length')));
-                                    // const reader = response.body.getReader();
-                                    // let chunks: any = [];
-                                    // while (true) {
-                                    //     const result = await reader.read();
-                                    //     setIsDownloadInProgress(true)
+                                    setBytesToDownload(Number(response.headers.get('content-length')));
+                                    const reader = response.body.getReader();
+                                    let chunks: any = [];
+                                    while (true) {
+                                        const result = await reader.read();
+                                        setIsDownloadInProgress(true)
 
-                                    //     if (result.done) {
-                                    //         console.log('Fetch complete');
-                                    //         setIsDownloadInProgress(false)
-                                    //         setBytesReceived(0)
-                                    //         setIsResourceBadgeClicked(false)
-                                    //         setLoading(false)
-                                    //         setContentType(pair[1])
-                                    //         setMediaBlobUrl(URL.createObjectURL(new Blob(chunks)))
-                                    //         let filepathSplit = filePath.split("/")
-                                    //         let filename = filepathSplit[filepathSplit.length - 1]
-                                    //         getSiblingResources(filename)
-                                    //         break;
-                                    //     } else {
-                                    //         chunks.push(result.value);
-                                    //         setBytesReceived(bytesReceived => bytesReceived + result.value.length)
-                                    //     }
-                                    // }
+                                        if (result.done) {
+                                            console.log('Fetch complete');
+                                            setIsDownloadInProgress(false)
+                                            setBytesReceived(0)
+                                            setIsResourceBadgeClicked(false)
+                                            setLoading(false)
+                                            setContentType(pair[1])
+                                            // setMediaBlobUrl(URL.createObjectURL(new Blob(chunks) ))
+                                            setMediaBlobUrl(URL.createObjectURL(new Blob(chunks, {type: pair[1]})))
+                                            console.log(`URL: ${URL.createObjectURL(new Blob(chunks))}`)
+                                            let filepathSplit = filePath.split("/")
+                                            let filename = filepathSplit[filepathSplit.length - 1]
+                                            getSiblingResources(filename)
+                                            break;
+                                        } else {
+                                            chunks.push(result.value);
+                                            setBytesReceived(bytesReceived => bytesReceived + result.value.length)
+                                        }
+                                    }
 
-                                    let contentBody = await response.blob()
+                                    // let contentBody = await response.blob()
 
-                                    setLoading(false)
-                                    setContentType(pair[1])
-                                    setMediaBlobUrl(URL.createObjectURL(contentBody))
-                                    let filepathSplit = filePath.split("/")
-                                    let filename = filepathSplit[filepathSplit.length - 1]
-                                    getSiblingResources(filename)
+                                    // setLoading(false)
+                                    // setContentType(pair[1])
+                                    // setMediaBlobUrl(URL.createObjectURL(contentBody))
+                                    // console.log(`URL: ${URL.createObjectURL(contentBody)}`)
+                                    // let filepathSplit = filePath.split("/")
+                                    // let filename = filepathSplit[filepathSplit.length - 1]
+                                    // getSiblingResources(filename)
                                     
                                 }
                             }
