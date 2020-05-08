@@ -80,8 +80,9 @@ const ResourcePage = ({ match }) => {
                                             setLoading(false)
                                             setContentType(pair[1])
                                             // setMediaBlobUrl(URL.createObjectURL(new Blob(chunks) ))
+                                            // console.log(pair[1])
                                             setMediaBlobUrl(URL.createObjectURL(new Blob(chunks, {type: pair[1]})))
-                                            console.log(`URL: ${URL.createObjectURL(new Blob(chunks))}`)
+                                            // console.log(`URL: ${URL.createObjectURL(new Blob(chunks))}`)
                                             let filepathSplit = filePath.split("/")
                                             let filename = filepathSplit[filepathSplit.length - 1]
                                             getSiblingResources(filename)
@@ -325,7 +326,7 @@ const ResourcePage = ({ match }) => {
                         </>
                     }
 
-                    {!carouselLoading && siblingResources &&
+                    {!carouselLoading && !loading && siblingResources &&
                         <Carousel
                             showThumbs={false}
                             selectedItem={resourceIndex}
