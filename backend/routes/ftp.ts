@@ -42,8 +42,6 @@ router.get('/folder-content/:folderName', async (request: Request, response: Res
 
 router.get('/file/:path', async (request: Request, response: Response) => {
 
-
-
     promiseRetry(function (retry, number) {
         if(number > 1){
             console.log('attempt (get file)', number);
@@ -64,10 +62,6 @@ router.get('/file/:path', async (request: Request, response: Response) => {
         response.status(500).send(error);
         response.end();
     });
-
-
-
-
 
     async function GetFile(): Promise<any> {
         return new Promise((resolve: (result: any) => void, reject: (error: Error) => void) => {
@@ -130,9 +124,9 @@ router.get('/file/:path', async (request: Request, response: Response) => {
                 client.size(`/${ftpRootFolder}${request.params.path}`, function (error, bytes) {
                     client.get(`/${ftpRootFolder}${request.params.path}`, function (error, stream) {
                         
-                        response.set({
-                            'content-length': bytes,
-                        })
+                        // response.set({
+                        //     'content-length': bytes,
+                        // })
 
                         
                         // if (stream) {
