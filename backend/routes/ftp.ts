@@ -124,9 +124,9 @@ router.get('/file/:path', async (request: Request, response: Response) => {
                 client.size(`/${ftpRootFolder}${request.params.path}`, function (error, bytes) {
                     client.get(`/${ftpRootFolder}${request.params.path}`, function (error, stream) {
                         
-                        // response.set({
-                        //     'content-length': bytes,
-                        // })
+                        response.set({
+                            'content-length': bytes,
+                        })
 
                         
                         // if (stream) {
@@ -152,7 +152,6 @@ router.get('/file/:path', async (request: Request, response: Response) => {
                         } else {
                             console.log("NO STREAM FOUND")
                         }
-
                     });
                 });
             });
