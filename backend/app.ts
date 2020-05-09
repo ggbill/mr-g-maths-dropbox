@@ -6,13 +6,7 @@ import ftpRouter from './routes/ftp';
 
 const path = require('path');
 const shrinkRay = require('shrink-ray-current');
-
-// console.log(`process.env.NODE_ENV: ${process.env.NODE_ENV}`)
-
-// if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
-// }
-
+require('dotenv').config();
 const app = express();
 
 // compress responses
@@ -33,6 +27,20 @@ if (process.env.NODE_ENV === 'production') {
     // Intercept requests to return the frontend's static entry point
     app.get("*", (_, response) => {
         response.sendFile(path.resolve("..", "frontend", "build", "index.html"));
+    });
+
+    // http -> https redirect
+    app.use((req, res, next) => {
+        if (process.env.NODE_ENV === 'production') {
+            if (req.headers['x-forwarded-proto'] !== 'https'){
+                console.log(`redirecting http to https://${req.headers.host}${req.url}`)
+                return res.redirect('https://' + req.headers.host + req.url);
+            }else{
+                return next();
+            }
+        } else {
+            return next();
+        }
     });
 
 }
