@@ -5,8 +5,6 @@ const router = require('express').Router();
 var Client = require('ftp');
 require('dotenv').config();
 var promiseRetry = require('promise-retry');
-var fs = require('fs');
-var Stream = require('stream');
 
 let ftpHost = process.env.FTP_HOST
 let ftpUsername = process.env.FTP_USERNAME
@@ -127,22 +125,6 @@ router.get('/file/:path', async (request: Request, response: Response) => {
                         response.set({
                             'content-length': bytes,
                         })
-
-                        
-                        // if (stream) {
-                        //     var buffers = []; 
-                        //     stream.on("data", function(data) { 
-                        //       buffers.push(data); 
-                        //     }); 
-                        //     stream.on("end", function() { 
-                        //       resolve(Buffer.concat(buffers)); 
-                        //     //   var actualContents = Buffer.concat(buffers); 
-                        //     })
-
-
-                        // } else {
-                        //     console.log("NO STREAM FOUND")
-                        // }
                         if (stream) {
                             stream.once('close', () => {
                                 resolve(stream)
