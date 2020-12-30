@@ -95,46 +95,46 @@ const useMrGFuctions = () => {
         return cleanedFileName
     }
 
-    const generateBreadcrumbs = (breadcrumbs: string[], isFinalEntryFileName: boolean): any => {
+    // const generateBreadcrumbs = (breadcrumbs: string[], isFinalEntryFileName: boolean): any => {
 
-        if (isFinalEntryFileName){
-            breadcrumbs[breadcrumbs.length -1] = cleanFilename(breadcrumbs[breadcrumbs.length -1])
-        }
+    //     if (isFinalEntryFileName){
+    //         breadcrumbs[breadcrumbs.length -1] = cleanFilename(breadcrumbs[breadcrumbs.length -1])
+    //     }
 
-        return (
-            <div className="breadcrumb-wrapper">
-                <span className="home-icon-wrapper"><Link to="/"><HomeIcon /></Link> / </span>
+    //     return (
+    //         <div className="breadcrumb-wrapper">
+    //             <span className="home-icon-wrapper"><Link to="/"><HomeIcon /></Link> / </span>
 
-                {breadcrumbs.map((breadcrumb, index) => {
-                    if (index === breadcrumbs.length - 1) {
-                        if (isFinalEntryFileName){
-                            return (
-                                <span key={index}>{breadcrumb}</span>
-                            )
-                        }else{
-                            return (
-                                <span key={index}>{cleanFolderName(breadcrumb)}</span>
-                            )
-                        }
-                    } else {
-                        let breadcrumbLink = "/"
-                        breadcrumbs.forEach((sub_breadcrumb, sub_index) => {
-                            if (sub_index < index) {
-                                breadcrumbLink += `${sub_breadcrumb}/`
-                            } else if (sub_index === index) {
-                                breadcrumbLink += `${sub_breadcrumb}`
-                            }
+    //             {breadcrumbs.map((breadcrumb, index) => {
+    //                 if (index === breadcrumbs.length - 1) {
+    //                     if (isFinalEntryFileName){
+    //                         return (
+    //                             <span key={index}>{breadcrumb}</span>
+    //                         )
+    //                     }else{
+    //                         return (
+    //                             <span key={index}>{cleanFolderName(breadcrumb)}</span>
+    //                         )
+    //                     }
+    //                 } else {
+    //                     let breadcrumbLink = "/"
+    //                     breadcrumbs.forEach((sub_breadcrumb, sub_index) => {
+    //                         if (sub_index < index) {
+    //                             breadcrumbLink += `${sub_breadcrumb}/`
+    //                         } else if (sub_index === index) {
+    //                             breadcrumbLink += `${sub_breadcrumb}`
+    //                         }
 
-                        });
+    //                     });
 
-                        return (
-                            <span key={index}><Link to={breadcrumbLink}>{<span key={index}>{cleanFolderName(breadcrumb)}</span>}</Link> / </span>
-                        )
-                    }
-                })}
-            </div>
-        )
-    }
+    //                     return (
+    //                         <span key={index}><Link to={breadcrumbLink}>{<span key={index}>{cleanFolderName(breadcrumb)}</span>}</Link> / </span>
+    //                     )
+    //                 }
+    //             })}
+    //         </div>
+    //     )
+    // }
 
     const sortByPrefix = (resourceList: any[]): any[] => {
         resourceList.sort((a, b) => {
@@ -150,7 +150,7 @@ const useMrGFuctions = () => {
         isVideoFormat,
         isImageFormat,
         isPDFFormat,
-        generateBreadcrumbs,
+        // generateBreadcrumbs,
         sortByPrefix,
         cleanFolderName,
         cleanFilename

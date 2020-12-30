@@ -1,0 +1,15 @@
+.breadcrumb-wrapper {
+    .home-icon-wrapper {
+        svg {
+            font-size: 1.3em;
+            position: relative;
+            top: 7px;
+            left: 1px;
+        }
+    }
+
+    .non-last-breadcrumb{
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}

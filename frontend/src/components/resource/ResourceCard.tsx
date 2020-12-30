@@ -10,7 +10,7 @@ import './resourceCard.scss';
 import useMrGFunctions from "../../hooks/useMrGFunctions"
 
 interface InputProps {
-    resource: string
+    resource: any
     matchUrl: string
     index: number
 }
@@ -21,11 +21,11 @@ const ResourceCard = (props: InputProps) => {
 
     return (
         <>
-            {mrGFunctions.isVideoFormat(props.resource.split(".")[1]) &&
+            {mrGFunctions.isVideoFormat(props.resource.name.split(".")[1]) &&
                 <>
 
-                    < Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource} className="resource-card">
-                        <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource}`}>
+                    < Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource.name} className="resource-card">
+                        <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource.name}`}>
                             <CardMedia
                                 image={require("../../images/Video-icon.png")}
                                 title="Click to view the video!"
@@ -37,7 +37,7 @@ const ResourceCard = (props: InputProps) => {
                                     </div>
                                 </div>
                                 <div className="card-title-wrapper">
-                                    <span>{mrGFunctions.cleanFilename(props.resource)}</span>
+                                    <span>{mrGFunctions.cleanFilename(props.resource.name)}</span>
                                 </div>
                             </CardContent>
                         </CardActionArea>
@@ -45,9 +45,9 @@ const ResourceCard = (props: InputProps) => {
                 </>
             }
 
-            {mrGFunctions.isAudioFormat(props.resource.split(".")[1]) &&
-                < Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource} className="resource-card">
-                    <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource}`}>
+            {mrGFunctions.isAudioFormat(props.resource.name.split(".")[1]) &&
+                < Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource.name} className="resource-card">
+                    <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource.name}`}>
                         <CardMedia
                             image={require("../../images/Audio-icon.png")}
                             title="Click to listen to the audio!"
@@ -59,16 +59,16 @@ const ResourceCard = (props: InputProps) => {
                                 </div>
                             </div>
                             <div className="card-title-wrapper">
-                                <span>{mrGFunctions.cleanFilename(props.resource)}</span>
+                                <span>{mrGFunctions.cleanFilename(props.resource.name)}</span>
                             </div>
                         </CardContent>
                     </CardActionArea>
                 </Card>
             }
 
-            {mrGFunctions.isImageFormat(props.resource.split(".")[1]) &&
-                <Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource} className="resource-card">
-                    <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource}`}>
+            {mrGFunctions.isImageFormat(props.resource.name.split(".")[1]) &&
+                <Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource.name} className="resource-card">
+                    <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource.name}`}>
                         <CardMedia
                             image={require("../../images/Image-icon.png")}
                             title="Click to view the image!"
@@ -80,16 +80,16 @@ const ResourceCard = (props: InputProps) => {
                                 </div>
                             </div>
                             <div className="card-title-wrapper">
-                                <span>{mrGFunctions.cleanFilename(props.resource)}</span>
+                                <span>{mrGFunctions.cleanFilename(props.resource.name)}</span>
                             </div>
                         </CardContent>
                     </CardActionArea>
                 </Card>
             }
 
-            {mrGFunctions.isPDFFormat(props.resource.split(".")[1]) &&
-                <Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource} className="resource-card">
-                    <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource}`}>
+            {mrGFunctions.isPDFFormat(props.resource.name.split(".")[1]) &&
+                <Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource.name} className="resource-card">
+                    <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource.name}`}>
                         <CardMedia
                             image={require("../../images/PDF-icon.png")}
                             title="Click to view the pdf!"
@@ -101,7 +101,7 @@ const ResourceCard = (props: InputProps) => {
                                 </div>
                             </div>
                             <div className="card-title-wrapper">
-                                <span>{mrGFunctions.cleanFilename(props.resource)}</span>
+                                <span>{mrGFunctions.cleanFilename(props.resource.name)}</span>
                             </div>
                         </CardContent>
                     </CardActionArea>
@@ -109,12 +109,12 @@ const ResourceCard = (props: InputProps) => {
             }
 
             {
-                !mrGFunctions.isVideoFormat(props.resource.split(".")[1]) &&
-                !mrGFunctions.isAudioFormat(props.resource.split(".")[1]) &&
-                !mrGFunctions.isImageFormat(props.resource.split(".")[1]) &&
-                !mrGFunctions.isPDFFormat(props.resource.split(".")[1]) &&
-                <Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource} className="resource-card">
-                    <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource}`}>
+                !mrGFunctions.isVideoFormat(props.resource.name.split(".")[1]) &&
+                !mrGFunctions.isAudioFormat(props.resource.name.split(".")[1]) &&
+                !mrGFunctions.isImageFormat(props.resource.name.split(".")[1]) &&
+                !mrGFunctions.isPDFFormat(props.resource.name.split(".")[1]) &&
+                <Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource.name} className="resource-card">
+                    <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource.name}`}>
                         <CardMedia
                             image={require("../../images/Files-icon.png")}
                             title="Click to view the file!"
@@ -126,7 +126,7 @@ const ResourceCard = (props: InputProps) => {
                                 </div>
                             </div>
                             <div className="card-title-wrapper">
-                                <span>{mrGFunctions.cleanFilename(props.resource)}</span>
+                                <span>{mrGFunctions.cleanFilename(props.resource.name)}</span>
                             </div>
                         </CardContent>
                     </CardActionArea>

@@ -60,17 +60,17 @@ const DynamicComponent = ({ match }) => {
 
     }
 
-    const generateBreadcrumbs = (): any => {
-        let trimmedUrl = match.url.substr(1)
-        let breadcrumbs: string[] = trimmedUrl.split("/")
+    // const generateBreadcrumbs = (): any => {
+    //     let trimmedUrl = match.url.substr(1)
+    //     let breadcrumbs: string[] = trimmedUrl.split("/")
 
-        return (
-            cloudinaryFunctions.generateBreadcrumbs(breadcrumbs, false)
-        )
-    }
+    //     return (
+    //         cloudinaryFunctions.generateBreadcrumbs(breadcrumbs, false)
+    //     )
+    // }
 
     React.useEffect(() => {
-            getFolderContent()        
+        getFolderContent()
 
         return () => {
             isCancelled.current = true;
@@ -87,7 +87,7 @@ const DynamicComponent = ({ match }) => {
     return (
         <>
             {match.isExact && <div className="content">
-                <h2>{generateBreadcrumbs()}</h2>
+                {/* <h2>{generateBreadcrumbs()}</h2> */}
                 {loading &&
                     <Loading
                         isDownloadInProgress={false}
@@ -96,7 +96,8 @@ const DynamicComponent = ({ match }) => {
                     />
                 }
 
-                {!loading && subFolders &&
+                {/* PUT BACK IN */}
+                {/* {!loading && subFolders &&
                     <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly">
                         {subFolders.map((subFolder: string, index: number) => {
                             return (
@@ -104,7 +105,7 @@ const DynamicComponent = ({ match }) => {
                             )
                         })}
                     </Box>
-                }
+                } */}
                 {!loading && files &&
                     <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly">
                         {files.map((resource: string, index: number) => {

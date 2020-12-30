@@ -189,9 +189,9 @@ const ResourcePage = ({ match }) => {
         let trimmedUrl = match.url.substr(1).replace(`/resource`, "")
         let breadcrumbs: string[] = trimmedUrl.split("/")
 
-        return (
-            cloudinaryFunctions.generateBreadcrumbs(breadcrumbs, true)
-        )
+        // return (
+        //     cloudinaryFunctions.generateBreadcrumbs(breadcrumbs, true)
+        // )
     }
 
     const handleIsResourceBadgeClicked = () => {
