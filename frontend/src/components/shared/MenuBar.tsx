@@ -7,7 +7,8 @@ import MenuIcon from '@material-ui/icons/Menu'
 import CloseIcon from '@material-ui/icons/Close'
 
 interface InputProps {
-    setCurrentPath: (path: string) => void,
+    page: string
+    setCurrentPath: (path: string) => void
 }
 
 const MenuBar = (props: InputProps) => {
@@ -47,7 +48,17 @@ const MenuBar = (props: InputProps) => {
         <>
             <AppBar className={scrollClass}>
                 <Toolbar>
+                    {props.page === "about" ?
+                        <>
+                            <Link to={'/'}>
+                                <img className="logo" alt="logo" src={require("../../images/MrG-maths-logo-mobile.png")}/>
+                            </Link>
+
+                        </>
+                        :
                         <img className="logo" alt="logo" src={require("../../images/MrG-maths-logo-mobile.png")} onClick={() => props.setCurrentPath("")} />
+                    }
+
                     <div className="menu-items">
                         <LinkButton className="link-button" to='/about'>About</LinkButton>
                     </div>

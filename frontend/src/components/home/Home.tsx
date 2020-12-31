@@ -29,6 +29,8 @@ const Home = () => {
     const getFolderContent = (): void => {
         // console.log(`GET FOLDER: currentPath: ${currentPath}`)
         setLoading(true)
+        setFiles(null)
+        setSubFolders(null)
         dropBox.getFolderContent(currentPath).then((data: any) => {
             if (data) {
                 if (!isCancelled.current) {
@@ -60,6 +62,8 @@ const Home = () => {
     const getFile = (): void => {
         // console.log(`GET FILE: currentPath: ${currentPath}`)
         setLoading(true)
+        setFiles(null)
+        setSubFolders(null)
         dropBox.getFile(currentPath).then((data: any) => {
             if (data) {
                 if (!isCancelled.current) {
@@ -103,7 +107,7 @@ const Home = () => {
 
     return (
         <>
-            <MenuBar setCurrentPath={setCurrentPath} />
+            <MenuBar page="home" setCurrentPath={setCurrentPath} />
             <div className="content home-page">
                 {currentPath === "" ?
                     <div className="intro-section">

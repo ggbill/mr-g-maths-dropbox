@@ -30,19 +30,19 @@ const useDropbox = () => {
         return dbx.filesGetMetadata({
             path: path
         }).then(res => {
-            return(res.result)
+            return (res.result)
         }).catch(error => {
             throw new Error(error);
         })
     };
 
     const getThumbnails = files => {
-        
+
         const paths = files.filter(file => file['.tag'] === 'file')
-        .map(file => ({
-            path: file.path_lower,
-            size: 'w480h320'
-        }))
+            .map(file => ({
+                path: file.path_lower,
+                size: 'w480h320'
+            }))
 
         return dbx.filesGetThumbnailBatch({
             entries: paths
@@ -68,10 +68,21 @@ const useDropbox = () => {
         })
     };
 
+    const getContentLink = (path: string) => {
+        return dbx.filesGetTemporaryLink({ path: path })
+            .then(function (response) {
+                return response.result
+            })
+            .catch(function (error) {
+                throw new Error(error);
+            });
+    }
+
     return {
         getFolderContent,
         getFile,
-        getThumbnails
+        getThumbnails,
+        getContentLink
     };
 }
 

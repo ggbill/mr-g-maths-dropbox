@@ -25,6 +25,7 @@ const ResourceComponent = (props: InputProps) => {
     // const ftpApi = useFetch("ftp")
     // const [file, setFile] = useState<any>(null)
     const [currentPath, setCurrentPath] = useState<string>("")
+    const [contentLink, setContentLink] = useState<string>("")
 
 
     const cloudinaryFunctions = useCloudinaryFunctions()
@@ -58,6 +59,19 @@ const ResourceComponent = (props: InputProps) => {
             return 32
         }
     }
+
+    React.useEffect(() => {
+        dropBox.getContentLink(props.file.path_lower).then((res: any) => {
+            // console.log(res)
+            setContentLink(res.link)
+        })
+        
+        
+        return () => {
+            isCancelled.current = true;
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps 
+    }, []);
 
     // const getFile = (): void => {
     //     console.log(`currentPath: ${currentPath}`)
@@ -127,7 +141,7 @@ const ResourceComponent = (props: InputProps) => {
                     <>
                         <div className="resource-wrapper">
                             <video
-                                src={mediaBlobUrl}
+                                src={contentLink}
                                 controls={true}
                                 autoPlay={true}
                             >
