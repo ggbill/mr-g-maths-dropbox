@@ -9,8 +9,10 @@ import NoContent from '../shared/NoContent';
 import useDropbox from "../../hooks/useDropbox"
 import useMrGFuctions from "../../hooks/useMrGFunctions"
 import BreadCrumbs from '../shared/BreadCrumbs';
+import MenuBar from '../shared/MenuBar';
+import ResourceComponent from '../resource/ResourceComponent';
 
-const Home = ({ match }) => {
+const Home = () => {
     const isCancelled = useRef(false)
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string>("")
@@ -20,17 +22,50 @@ const Home = ({ match }) => {
     const [isFilesFound, setIsFilesFound] = useState<boolean>(true)
     const [isSubFoldersFound, setIsSubFoldersFound] = useState<boolean>(true)
     const dropBox = useDropbox();
-    const mrGFunctions = useMrGFuctions()
+    const [file, setFile] = useState<any>(null)
+    const [isFile, setIsFile] = useState<boolean>(false)
+
 
     const getFolderContent = (): void => {
+        // console.log(`GET FOLDER: currentPath: ${currentPath}`)
         setLoading(true)
         dropBox.getFolderContent(currentPath).then((data: any) => {
             if (data) {
                 if (!isCancelled.current) {
-                    console.log(`DATA: ${JSON.stringify(data)}`)
-                    console.log(`setSubFolders: ${data.filter(entry => entry['.tag'] === "folder")}`)
                     setSubFolders(data.filter(entry => entry['.tag'] === "folder"))
-                    setFiles(data.filter(entry => entry['.tag'] === "file"))
+                    // setFiles(data.filter(entry => entry['.tag'] === "file"))
+                    setFilesAndGetThumbnails(data.filter(entry => entry['.tag'] === "file"))
+                    setIsFile(false)
+                }
+            }
+            setLoading(false)
+        })
+            .catch((err: Error) => {
+                if (!isCancelled.current) {
+                    console.log(err)
+                    setError(err.message)
+                    setLoading(false)
+                }
+            })
+    }
+
+    const setFilesAndGetThumbnails = (files) => {
+        dropBox.getThumbnails(files).then((data: any) => {
+            setFiles(data)
+        }).catch((err: Error) => {
+            setError(err.message)
+        })
+    }
+
+    const getFile = (): void => {
+        // console.log(`GET FILE: currentPath: ${currentPath}`)
+        setLoading(true)
+        dropBox.getFile(currentPath).then((data: any) => {
+            if (data) {
+                if (!isCancelled.current) {
+                    // console.log(`DATA: ${JSON.stringify(data)}`)
+                    setFile(data)
+                    setIsFile(true)
                 }
             }
             setLoading(false)
@@ -48,28 +83,13 @@ const Home = ({ match }) => {
         setCurrentPath(path)
     }
 
-    // const generateBreadcrumbs = (): any => {
-    //     // let trimmedUrl = match.url.substr(1)
-    //     // let breadcrumbs: string[] = trimmedUrl.split("/")
-    //     currentPath.split("/")
-
-    //     return (
-    //         mrGFunctions.generateBreadcrumbs(currentPath.substr(1).split("/"), false)
-    //     )
-    // }
-
-    // React.useEffect(() => {
-    //     getFolderContent();
-
-    //     return () => {
-    //         isCancelled.current = true;
-    //     };
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps  
-    // }, []);
-
     React.useEffect(() => {
-        getFolderContent();
-
+        if (currentPath.split(".").length > 1){
+            getFile()
+        }else{
+            getFolderContent()
+        }
+        
         // return () => {
         //     isCancelled.current = true;
         // };
@@ -82,62 +102,70 @@ const Home = ({ match }) => {
     }
 
     return (
-        <div className="content home-page">
-            {currentPath === "" ?
-                <div className="intro-section">
-                    <img className="minion-gif-desktop" alt="minion" src={require("../../images/Maths-food-Minion-black.gif")} />
-                    <img className="minion-gif-mobile" alt="minion" src={require("../../images/Maths-food-Minion-mobile-black.gif")} />
-                    <div className="text-section">
-                        <p>
-                            Click on the folders below if you’re hungry to learn mathematics the Mr G way
-                </p>
+        <>
+            <MenuBar setCurrentPath={setCurrentPath} />
+            <div className="content home-page">
+                {currentPath === "" ?
+                    <div className="intro-section">
+                        <img className="minion-gif-desktop" alt="minion" src={require("../../images/Maths-food-Minion-black.gif")} />
+                        <img className="minion-gif-mobile" alt="minion" src={require("../../images/Maths-food-Minion-mobile-black.gif")} />
+                        <div className="text-section">
+                            <p>
+                                Click on the folders below if you’re hungry to learn mathematics the Mr G way
+                            </p>
+                        </div>
                     </div>
-                </div>
-                :
-                <h2>
-                    <BreadCrumbs
-                        breadCrumbs={currentPath.substr(1).split("/")}
-                        isFinalEntryFileName={false}
-                        setCurrentPath={setCurrentPath}
+                    :
+                    <h2>
+                        <BreadCrumbs
+                            breadCrumbs={currentPath.substr(1).split("/")}
+                            isFinalEntryFileName={false}
+                            setCurrentPath={setCurrentPath}
+                        />
+                    </h2>
+                }
+
+
+                {loading &&
+                    <Loading
+                        isDownloadInProgress={false}
+                        bytesReceived={0}
+                        bytesToDownload={0}
                     />
-                </h2>
-            }
+                }
 
+                {!loading && !isFile && subFolders &&
 
-            {loading &&
-                <Loading
-                    isDownloadInProgress={false}
-                    bytesReceived={0}
-                    bytesToDownload={0}
-                />
-            }
+                    <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly">
+                        {subFolders.map((subFolder: string, index: number) => {
+                            return (
+                                <FolderCard key={index} folder={subFolder} index={index} setCurrentPath={setCurrentPathVar} />
+                            )
+                        })}
+                    </Box>
+                }
 
-            {!loading && subFolders &&
+                {!loading && !isFile && files &&
+                    <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly">
+                        {files.map((resource: string, index: number) => {
+                            return (      
+                                <ResourceCard key={index} resource={resource} index={index} setCurrentPath={setCurrentPathVar} />
+                            )
+                        })}
+                    </Box>
+                }
 
-                <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly">
-                    {subFolders.map((subFolder: string, index: number) => {
-                        return (
-                            <FolderCard key={index} folder={subFolder} url={match.url} index={index} setCurrentPath={setCurrentPathVar} />
-                        )
-                    })}
-                </Box>
-            }
+                {!loading && isFile &&
+                    <ResourceComponent file={file}/>
+                }
 
-            {!loading && files &&
-                <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly">
-                    {files.map((resource: string, index: number) => {
-                        return (
-                            <ResourceCard key={index} resource={resource} matchUrl={match.url} index={index} />
-                        )
-                    })}
-                </Box>
-            }
+                {!loading && !isSubFoldersFound && !isFilesFound && <div className="no-content-found">
+                    <NoContent />
+                </div>}
 
-            {!loading && !isSubFoldersFound && !isFilesFound && <div className="no-content-found">
-                <NoContent />
-            </div>}
+            </div >
+        </>
 
-        </div >
     )
 }
 

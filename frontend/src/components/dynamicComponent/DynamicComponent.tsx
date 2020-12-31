@@ -5,7 +5,7 @@ import { Box } from '@material-ui/core'
 import './dynamicContent.scss';
 import Loading from '../shared/Loading'
 import ResourceCard from '../resource/ResourceCard'
-import ResourcePage from '../resource/ResourcePage'
+import ResourcePage from '../resource/ResourceComponent'
 import FolderCard from '../shared/FolderCard'
 import useCloudinaryFunctions from "../../hooks/useMrGFunctions"
 import NoContent from '../shared/NoContent';
@@ -106,7 +106,7 @@ const DynamicComponent = ({ match }) => {
                         })}
                     </Box>
                 } */}
-                {!loading && files &&
+                {/* {!loading && files &&
                     <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly">
                         {files.map((resource: string, index: number) => {
                             return (
@@ -114,7 +114,7 @@ const DynamicComponent = ({ match }) => {
                             )
                         })}
                     </Box>
-                }
+                } */}
 
                 {!loading && !isSubFoldersFound && !isFilesFound &&
                     <NoContent />

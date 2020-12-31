@@ -6,7 +6,11 @@ import LinkButton from './LinkButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import CloseIcon from '@material-ui/icons/Close'
 
-const MenuBar = () => {
+interface InputProps {
+    setCurrentPath: (path: string) => void,
+}
+
+const MenuBar = (props: InputProps) => {
     const [scrollClass, setScrollClass] = useState("menu-bar no-shadow")
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
@@ -43,9 +47,7 @@ const MenuBar = () => {
         <>
             <AppBar className={scrollClass}>
                 <Toolbar>
-                    <Link className="clickable-icon" to={'/'}>
-                        <img className="logo" alt="logo" src={require("../../images/MrG-maths-logo-mobile.png")} />
-                    </Link>
+                        <img className="logo" alt="logo" src={require("../../images/MrG-maths-logo-mobile.png")} onClick={() => props.setCurrentPath("")} />
                     <div className="menu-items">
                         <LinkButton className="link-button" to='/about'>About</LinkButton>
                     </div>

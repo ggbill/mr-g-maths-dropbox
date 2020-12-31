@@ -11,8 +11,9 @@ import useMrGFunctions from "../../hooks/useMrGFunctions"
 
 interface InputProps {
     resource: any
-    matchUrl: string
+    // matchUrl: string
     index: number
+    setCurrentPath: (path: string) => void
 }
 
 const ResourceCard = (props: InputProps) => {
@@ -21,13 +22,14 @@ const ResourceCard = (props: InputProps) => {
 
     return (
         <>
+            {/* {JSON.stringify(props.resource)} */}
             {mrGFunctions.isVideoFormat(props.resource.name.split(".")[1]) &&
                 <>
 
-                    < Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource.name} className="resource-card">
-                        <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource.name}`}>
+                    <Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource.name} className="resource-card">
+                        <CardActionArea onClick={() => props.setCurrentPath(props.resource.path_display)}>
                             <CardMedia
-                                image={require("../../images/Video-icon.png")}
+                                image={`data:video/${props.resource.name.split(".")[1]};base64, ${props.resource.thumbnail}`}
                                 title="Click to view the video!"
                             />
                             <CardContent>
@@ -46,8 +48,8 @@ const ResourceCard = (props: InputProps) => {
             }
 
             {mrGFunctions.isAudioFormat(props.resource.name.split(".")[1]) &&
-                < Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource.name} className="resource-card">
-                    <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource.name}`}>
+                <Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource.name} className="resource-card">
+                    <CardActionArea onClick={() => props.setCurrentPath(props.resource.path_display)}>
                         <CardMedia
                             image={require("../../images/Audio-icon.png")}
                             title="Click to listen to the audio!"
@@ -68,9 +70,9 @@ const ResourceCard = (props: InputProps) => {
 
             {mrGFunctions.isImageFormat(props.resource.name.split(".")[1]) &&
                 <Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource.name} className="resource-card">
-                    <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource.name}`}>
+                    <CardActionArea onClick={() => props.setCurrentPath(props.resource.path_display)}>
                         <CardMedia
-                            image={require("../../images/Image-icon.png")}
+                            image={`data:image/${props.resource.name.split(".")[1]};base64, ${props.resource.thumbnail}`}
                             title="Click to view the image!"
                         />
                         <CardContent>
@@ -89,7 +91,7 @@ const ResourceCard = (props: InputProps) => {
 
             {mrGFunctions.isPDFFormat(props.resource.name.split(".")[1]) &&
                 <Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource.name} className="resource-card">
-                    <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource.name}`}>
+                    <CardActionArea onClick={() => props.setCurrentPath(props.resource.path_display)}>
                         <CardMedia
                             image={require("../../images/PDF-icon.png")}
                             title="Click to view the pdf!"
@@ -114,7 +116,7 @@ const ResourceCard = (props: InputProps) => {
                 !mrGFunctions.isImageFormat(props.resource.name.split(".")[1]) &&
                 !mrGFunctions.isPDFFormat(props.resource.name.split(".")[1]) &&
                 <Card style={{ animationDelay: `${props.index * 0.1}s` }} key={props.resource.name} className="resource-card">
-                    <CardActionArea component={Link} to={`${props.matchUrl}/resource/${props.resource.name}`}>
+                    <CardActionArea onClick={() => props.setCurrentPath(props.resource.path_display)}>
                         <CardMedia
                             image={require("../../images/Files-icon.png")}
                             title="Click to view the file!"
