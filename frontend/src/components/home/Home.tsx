@@ -62,8 +62,6 @@ const Home = () => {
     const getFile = (): void => {
         // console.log(`GET FILE: currentPath: ${currentPath}`)
         setLoading(true)
-        setFiles(null)
-        setSubFolders(null)
         dropBox.getFile(currentPath).then((data: any) => {
             if (data) {
                 if (!isCancelled.current) {
@@ -159,17 +157,15 @@ const Home = () => {
                     </Box>
                 }
 
-                {!loading && isFile &&
-                    <ResourceComponent file={file}/>
+                {!loading && isFile && 
+                    <ResourceComponent file={file} allFilesInFolder={files} setCurrentPath={setCurrentPathVar}/>
                 }
 
                 {!loading && !isSubFoldersFound && !isFilesFound && <div className="no-content-found">
                     <NoContent />
                 </div>}
-
             </div >
         </>
-
     )
 }
 

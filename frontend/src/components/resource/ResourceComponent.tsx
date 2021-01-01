@@ -17,7 +17,9 @@ import BreadCrumbs from '../shared/BreadCrumbs'
 import MenuBar from '../shared/MenuBar'
 
 interface InputProps {
-    file: any
+    file: any,
+    allFilesInFolder: any[]
+    setCurrentPath: (path: string) => void
 }
 
 const ResourceComponent = (props: InputProps) => {
@@ -65,7 +67,8 @@ const ResourceComponent = (props: InputProps) => {
             // console.log(res)
             setContentLink(res.link)
         })
-        
+
+        // console.log(`all files: ${JSON.stringify(props.allFilesInFolder)}`)
         
         return () => {
             isCancelled.current = true;
@@ -73,69 +76,10 @@ const ResourceComponent = (props: InputProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps 
     }, []);
 
-    // const getFile = (): void => {
-    //     console.log(`currentPath: ${currentPath}`)
-    //     setLoading(true)
-    //     dropBox.getFile(currentPath).then((data: any) => {
-    //         if (data) {
-    //             if (!isCancelled.current) {
-    //                 console.log(`DATA: ${JSON.stringify(data)}`)
-    //                 setFile(data)
-    //             }
-    //         }
-    //         setLoading(false)
-    //     })
-    //         .catch((err: Error) => {
-    //             if (!isCancelled.current) {
-    //                 console.log(err)
-    //                 setError(err.message)
-    //                 setLoading(false)
-    //             }
-    //         })
-    // }
-
-    // const handleIsResourceBadgeClicked = () => {
-    //     console.log("setIsResourceBadgeClicked(true)")
-    //     setIsResourceBadgeClicked(true)
-    // };
-
-    //only do this when resource badge is clicked (to reload page)
-    // React.useEffect(() => {
-    //     if (isResourceBadgeClicked) {
-    //         getFile()
-    //     }
-    // }, [isResourceBadgeClicked]);
-
-
-    // React.useEffect(() => {
-    //     console.log(`curent path: ${decodeURIComponent(match.url.split("resource/")[1])}`)
-    //     setCurrentPath(decodeURIComponent(match.url.split("resource/")[1]))
-
-    //     return () => {
-    //         isCancelled.current = true;
-    //     };
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps 
-    // }, []);
-
-    // React.useEffect(() => {
-    //     getFile()
-
-    //     return () => {
-    //         isCancelled.current = true;
-    //     };
-    // }, [currentPath]);
-
-
-    // if (error) {
-    //     return (
-    //         <Error error={error} />
-    //     )
-    // }
-
     return (
         <>
             {/* <div className="content"> */}
-            <p>{JSON.stringify(props.file)}</p>
+            {/* <p>{JSON.stringify(props.file)}</p> */}
 
                 {mrGFunctions.isVideoFormat(props.file.name.split(".")[1]) &&
                     <>
@@ -156,7 +100,7 @@ const ResourceComponent = (props: InputProps) => {
                         <div className="resource-wrapper audio">
                             <img alt="placeholder audio" src={require("../../images/Audio-icon.png")} />
                             <audio
-                                src={mediaBlobUrl}
+                                src={contentLink}
                                 controls={true}
                                 autoPlay={true}
                             >
@@ -170,7 +114,7 @@ const ResourceComponent = (props: InputProps) => {
                     <>
                         
                         <div className="resource-wrapper">
-                            <img src={mediaBlobUrl} alt="mr.g" />
+                            <img src={contentLink} alt="mr.g" />
                         </div>
                     </>
                 }
@@ -181,16 +125,16 @@ const ResourceComponent = (props: InputProps) => {
 
                             {(isMobile || isTablet) ?
                                 <>
-                                    {/* <a href={mediaBlobUrl} download={`${match.url.split("resource/")[1]}`}>
+                                    <a href={contentLink} download={contentLink}>
                                         <Button className="download-button" variant="contained">
                                             <span>Download PDF</span>
                                             <GetAppIcon />
                                         </Button>
-                                    </a> */}
+                                    </a>
                                     <img alt="placeholder pdf" src={require("../../images/PDF-icon.png")} />
                                 </>
                                 :
-                                <object data={mediaBlobUrl} >
+                                <object data={contentLink} >
                                     Your browser does not support the pdf viewer element.
                                     </object>
                             }
@@ -205,19 +149,19 @@ const ResourceComponent = (props: InputProps) => {
                     !mrGFunctions.isPDFFormat(props.file.name.split(".")[1]) &&
                     <>
                         <div className="resource-wrapper file">
-                            {/* <a href={mediaBlobUrl} download={`${match.url.split("resource/")[1]}`}>
+                            <a href={contentLink} download={contentLink}>
                                 <Button className="download-button" variant="contained">
                                     <span>Download File</span>
                                     <GetAppIcon />
                                 </Button>
-                            </a> */}
+                            </a>
                             <img alt="placeholder audio" src={require("../../images/Files-icon.png")} />
 
                         </div>
                     </>
                 }
 
-                {/* {!carouselLoading && !loading && siblingResources &&
+                {!carouselLoading && !loading && 
                     <Carousel
                         showThumbs={false}
                         selectedItem={resourceIndex}
@@ -229,15 +173,21 @@ const ResourceComponent = (props: InputProps) => {
                         swipeable={false}
                         showArrows={true}
                     >
-                        {siblingResources.map((siblingResource, index) => {
+                        {props.allFilesInFolder.map((siblingResource, index) => {
                             return (
-                                <ResourceBadge resource={siblingResource} matchUrl={match.url} index={index} key={index} setIsResourceBadgeClicked={handleIsResourceBadgeClicked} />
+                                <ResourceBadge 
+                                resource={siblingResource} 
+                                index={index}
+                                key={index} 
+                                setCurrentPath={props.setCurrentPath}
+                                // setIsResourceBadgeClicked={handleIsResourceBadgeClicked} 
+                                />
                             )
                         })}
                     </Carousel>
                 }
 
-                {carouselLoading &&
+                {/* {carouselLoading &&
                     <div className="carousel-loading-wrapper">
                         <CircularProgress />
                     </div>
