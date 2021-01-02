@@ -121,7 +121,7 @@ const Home = () => {
                     <h2>
                         <BreadCrumbs
                             breadCrumbs={currentPath.substr(1).split("/")}
-                            isFinalEntryFileName={false}
+                            isFinalEntryFileName={isFile ? true : false}
                             setCurrentPath={setCurrentPath}
                         />
                     </h2>

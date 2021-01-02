@@ -83,8 +83,8 @@ const useMrGFuctions = () => {
             fileNameSplit.splice(0, 1) //remove the first part
         }
 
-        let extensionSplit = fileNameSplit[fileNameSplit.length - 1].split(".")
-        fileNameSplit[fileNameSplit.length - 1] = extensionSplit[0]
+        // let extensionSplit = fileNameSplit[fileNameSplit.length - 1].split(".")
+        // fileNameSplit[fileNameSplit.length - 1] = extensionSplit[0]
 
         let cleanedFileName = ""
 

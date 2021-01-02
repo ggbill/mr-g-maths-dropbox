@@ -16,9 +16,13 @@ const BreadCrumbs = (props: InputProps) => {
 
     const generateBreadcrumbs = (breadcrumbs: string[], isFinalEntryFileName: boolean): any => {
 
-        if (isFinalEntryFileName){
-            breadcrumbs[breadcrumbs.length -1] = mrGFunctions.cleanFilename(breadcrumbs[breadcrumbs.length -1])
-        }
+        // if (isFinalEntryFileName){
+        //     breadcrumbs[breadcrumbs.length -1] = mrGFunctions.cleanFilename(breadcrumbs[breadcrumbs.length -1])
+        // }
+
+        props.breadCrumbs.forEach(breadcrumb => {
+            breadcrumb = mrGFunctions.cleanFilename(breadcrumb)
+        });
 
         return (
             <div className="breadcrumb-wrapper">
@@ -28,7 +32,7 @@ const BreadCrumbs = (props: InputProps) => {
                     if (index === breadcrumbs.length - 1) {
                         if (isFinalEntryFileName){
                             return (
-                                <span key={index}>{breadcrumb}</span>
+                                <span key={index}>{mrGFunctions.cleanFolderName(breadcrumb)}</span>
                             )
                         }else{
                             return (
