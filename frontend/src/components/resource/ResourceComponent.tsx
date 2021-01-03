@@ -19,6 +19,7 @@ const ResourceComponent = (props: InputProps) => {
     const isCancelled = React.useRef(false)
     const [contentLink, setContentLink] = useState<string>("")
     const [siblingResources, setSiblingResources] = useState<any>([])
+
     const isMobile = useMediaQuery('(max-width:400px)');
     const isTablet = useMediaQuery('(max-width:600px) and (min-width: 401px)');
     const mrGFunctions = useMrGFunctions()
@@ -66,9 +67,6 @@ const ResourceComponent = (props: InputProps) => {
 
     return (
         <>
-            {/* <div className="content"> */}
-            {/* <p>{JSON.stringify(props.file)}</p> */}
-
             {mrGFunctions.isVideoFormat(props.file.name.split(".")[1]) &&
                 <>
                     <div className="resource-wrapper">
@@ -148,7 +146,7 @@ const ResourceComponent = (props: InputProps) => {
                     </div>
                 </>
             }
-
+         
             <Carousel
                 showThumbs={false}
                 centerMode={true}

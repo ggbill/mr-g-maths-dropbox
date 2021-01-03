@@ -75,10 +75,9 @@ const Home = () => {
     }
 
     const setCurrentPathVar = (path: string) => {
-        setFiles([])
-        setSubFolders([])
         setCurrentPath(path)
     }
+
 
     React.useEffect(() => {
         if (currentPath.split(".").length > 1) {
@@ -104,6 +103,7 @@ const Home = () => {
         <>
             <MenuBar page="home" setCurrentPath={setCurrentPath} />
             <div className="content home-page">
+            {/* <p>files: {JSON.stringify(files)}</p> */}
                 {currentPath === "" ?
                     <div className="intro-section">
                         <img className="minion-gif-desktop" alt="minion" src={require("../../images/Maths-food-Minion-black.gif")} />
@@ -119,7 +119,7 @@ const Home = () => {
                         <BreadCrumbs
                             breadCrumbs={currentPath.substr(1).split("/")}
                             isFinalEntryFileName={isFile ? true : false}
-                            setCurrentPath={setCurrentPath}
+                            setCurrentPath={setCurrentPathVar}
                         />
                     </h2>
                 }

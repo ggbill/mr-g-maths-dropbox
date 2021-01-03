@@ -75,7 +75,7 @@ const useMrGFuctions = () => {
         return cleanFolderName
     }
 
-    const cleanFilename = (filename: string): string => {
+    const cleanFileName = (filename: string): string => {
         // console.log(`filename: ${filename}`)
         let fileNameSplit = filename.split("_");
 
@@ -111,7 +111,7 @@ const useMrGFuctions = () => {
         isPDFFormat,
         sortByPrefix,
         cleanFolderName,
-        cleanFilename
+        cleanFileName
     };
 };
 export default useMrGFuctions;

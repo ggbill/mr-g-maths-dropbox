@@ -36,7 +36,7 @@ const ResourceCard = (props: InputProps) => {
                                     </div>
                                 </div>
                                 <div className="card-title-wrapper">
-                                    <span>{mrGFunctions.cleanFilename(props.resource.name)}</span>
+                                    <span>{mrGFunctions.cleanFileName(props.resource.name)}</span>
                                 </div>
                             </CardContent>
                         </CardActionArea>
@@ -58,7 +58,7 @@ const ResourceCard = (props: InputProps) => {
                                 </div>
                             </div>
                             <div className="card-title-wrapper">
-                                <span>{mrGFunctions.cleanFilename(props.resource.name)}</span>
+                                <span>{mrGFunctions.cleanFileName(props.resource.name)}</span>
                             </div>
                         </CardContent>
                     </CardActionArea>
@@ -79,7 +79,7 @@ const ResourceCard = (props: InputProps) => {
                                 </div>
                             </div>
                             <div className="card-title-wrapper">
-                                <span>{mrGFunctions.cleanFilename(props.resource.name)}</span>
+                                <span>{mrGFunctions.cleanFileName(props.resource.name)}</span>
                             </div>
                         </CardContent>
                     </CardActionArea>
@@ -100,7 +100,7 @@ const ResourceCard = (props: InputProps) => {
                                 </div>
                             </div>
                             <div className="card-title-wrapper">
-                                <span>{mrGFunctions.cleanFilename(props.resource.name)}</span>
+                                <span>{mrGFunctions.cleanFileName(props.resource.name)}</span>
                             </div>
                         </CardContent>
                     </CardActionArea>
@@ -125,7 +125,7 @@ const ResourceCard = (props: InputProps) => {
                                 </div>
                             </div>
                             <div className="card-title-wrapper">
-                                <span>{mrGFunctions.cleanFilename(props.resource.name)}</span>
+                                <span>{mrGFunctions.cleanFileName(props.resource.name)}</span>
                             </div>
                         </CardContent>
                     </CardActionArea>

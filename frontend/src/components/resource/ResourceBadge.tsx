@@ -38,7 +38,7 @@ const ResourceBadge = (props: InputProps) => {
                                     </div>
                                 </div>
                                 <div className="card-title-wrapper">
-                                    <span>{cloudinaryFunctions.cleanFilename(props.resource.name)}</span>
+                                    <span>{cloudinaryFunctions.cleanFileName(props.resource.name)}</span>
                                 </div>
                             </CardContent>
                         </CardActionArea>
@@ -60,7 +60,7 @@ const ResourceBadge = (props: InputProps) => {
                                 </div>
                             </div>
                             <div className="card-title-wrapper">
-                                <span>{cloudinaryFunctions.cleanFilename(props.resource.name)}</span>
+                                <span>{cloudinaryFunctions.cleanFileName(props.resource.name)}</span>
                             </div>
                         </CardContent>
                     </CardActionArea>
@@ -81,7 +81,7 @@ const ResourceBadge = (props: InputProps) => {
                                 </div>
                             </div>
                             <div className="card-title-wrapper">
-                                <span>{cloudinaryFunctions.cleanFilename(props.resource.name)}</span>
+                                <span>{cloudinaryFunctions.cleanFileName(props.resource.name)}</span>
                             </div>
                         </CardContent>
                     </CardActionArea>
@@ -102,7 +102,7 @@ const ResourceBadge = (props: InputProps) => {
                                 </div>
                             </div>
                             <div className="card-title-wrapper">
-                                <span>{cloudinaryFunctions.cleanFilename(props.resource.name)}</span>
+                                <span>{cloudinaryFunctions.cleanFileName(props.resource.name)}</span>
                             </div>
                         </CardContent>
                     </CardActionArea>
@@ -127,7 +127,7 @@ const ResourceBadge = (props: InputProps) => {
                                 </div>
                             </div>
                             <div className="card-title-wrapper">
-                                <span>{cloudinaryFunctions.cleanFilename(props.resource.name)}</span>
+                                <span>{cloudinaryFunctions.cleanFileName(props.resource.name)}</span>
                             </div>
                         </CardContent>
                     </CardActionArea>
