@@ -10,16 +10,7 @@ const useDropbox = () => {
         return dbx.filesListFolder({
             path: path
         }).then(res => {
-            // if (type === "file") {
-            //     return (res.result.entries.filter(entry => entry['.tag'] === "file").sort((a, b) => Number(a.name.split("_")[0]) - Number(b.name.split("_")[0])))
-            // } else if (type === "folder") {
-            //     return (res.result.entries.filter(entry => entry['.tag'] === "folder").sort((a, b) => Number(a.name.split("_")[0]) - Number(b.name.split("_")[0])))
-            // } else {
-            //     return (res.result.entries.sort((a, b) => Number(a.name.split("_")[0]) - Number(b.name.split("_")[0])))
-            // }
-
             return (res.result.entries.sort((a, b) => Number(a.name.split("_")[0]) - Number(b.name.split("_")[0])))
-
         }).catch(error => {
             throw new Error(error);
         })
@@ -47,22 +38,14 @@ const useDropbox = () => {
         return dbx.filesGetThumbnailBatch({
             entries: paths
         }).then(res => {
-            // return(res.result)
-
-            //make a copy of state.files
             const newStateFiles = [...files]
-            //loop through the file objects returned from dbx
             res.result.entries.forEach((file: any) => {
-                //figure out the index of the file we need to update
                 let indexToUpdate = files.findIndex(
-                    stateFile => file.metadata.path_lower == stateFile.path_lower
+                    stateFile => file.metadata.path_lower === stateFile.path_lower
                 )
-
                 newStateFiles[indexToUpdate].thumbnail = file.thumbnail
             })
-
             return newStateFiles
-
         }).catch(error => {
             throw new Error(error);
         })

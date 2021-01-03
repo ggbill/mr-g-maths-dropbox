@@ -7,7 +7,6 @@ import ResourceCard from '../resource/ResourceCard'
 import Error from '../shared/Error';
 import NoContent from '../shared/NoContent';
 import useDropbox from "../../hooks/useDropbox"
-import useMrGFuctions from "../../hooks/useMrGFunctions"
 import BreadCrumbs from '../shared/BreadCrumbs';
 import MenuBar from '../shared/MenuBar';
 import ResourceComponent from '../resource/ResourceComponent';
@@ -17,25 +16,21 @@ const Home = () => {
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string>("")
     const [currentPath, setCurrentPath] = useState<string>("")
-    const [subFolders, setSubFolders] = useState<any>(null)
-    const [files, setFiles] = useState<any>(null)
-    const [isFilesFound, setIsFilesFound] = useState<boolean>(true)
-    const [isSubFoldersFound, setIsSubFoldersFound] = useState<boolean>(true)
+    const [subFolders, setSubFolders] = useState<any>([])
+    const [files, setFiles] = useState<any>([])
     const dropBox = useDropbox();
     const [file, setFile] = useState<any>(null)
     const [isFile, setIsFile] = useState<boolean>(false)
 
 
     const getFolderContent = (): void => {
-        // console.log(`GET FOLDER: currentPath: ${currentPath}`)
         setLoading(true)
-        setFiles(null)
-        setSubFolders(null)
+        setFiles([])
+        setSubFolders([])
         dropBox.getFolderContent(currentPath).then((data: any) => {
             if (data) {
                 if (!isCancelled.current) {
                     setSubFolders(data.filter(entry => entry['.tag'] === "folder"))
-                    // setFiles(data.filter(entry => entry['.tag'] === "file"))
                     setFilesAndGetThumbnails(data.filter(entry => entry['.tag'] === "file"))
                     setIsFile(false)
                 }
@@ -60,12 +55,10 @@ const Home = () => {
     }
 
     const getFile = (): void => {
-        // console.log(`GET FILE: currentPath: ${currentPath}`)
         setLoading(true)
         dropBox.getFile(currentPath).then((data: any) => {
             if (data) {
                 if (!isCancelled.current) {
-                    // console.log(`DATA: ${JSON.stringify(data)}`)
                     setFile(data)
                     setIsFile(true)
                 }
@@ -82,19 +75,23 @@ const Home = () => {
     }
 
     const setCurrentPathVar = (path: string) => {
+        setFiles([])
+        setSubFolders([])
         setCurrentPath(path)
     }
 
     React.useEffect(() => {
-        if (currentPath.split(".").length > 1){
+        if (currentPath.split(".").length > 1) {
             getFile()
-        }else{
+        } else {
             getFolderContent()
         }
-        
+
         // return () => {
         //     isCancelled.current = true;
         // };
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps 
     }, [currentPath]);
 
     if (error) {
@@ -129,11 +126,7 @@ const Home = () => {
 
 
                 {loading &&
-                    <Loading
-                        isDownloadInProgress={false}
-                        bytesReceived={0}
-                        bytesToDownload={0}
-                    />
+                    <Loading />
                 }
 
                 {!loading && !isFile && subFolders &&
@@ -150,18 +143,18 @@ const Home = () => {
                 {!loading && !isFile && files &&
                     <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly">
                         {files.map((resource: string, index: number) => {
-                            return (      
+                            return (
                                 <ResourceCard key={index} resource={resource} index={index} setCurrentPath={setCurrentPathVar} />
                             )
                         })}
                     </Box>
                 }
 
-                {!loading && isFile && 
-                    <ResourceComponent file={file} allFilesInFolder={files} setCurrentPath={setCurrentPathVar}/>
+                {!loading && isFile &&
+                    <ResourceComponent file={file} allFilesInFolder={files} setCurrentPath={setCurrentPathVar} />
                 }
 
-                {!loading && !isSubFoldersFound && !isFilesFound && <div className="no-content-found">
+                {!loading && !isFile && !subFolders.length && !files.length && <div className="no-content-found">
                     <NoContent />
                 </div>}
             </div >

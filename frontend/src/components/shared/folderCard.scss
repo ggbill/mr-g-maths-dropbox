@@ -21,7 +21,6 @@
     margin: 12px;
     text-align: center;
     box-shadow: 0 0 10px 4px #3cb8e7;
-    font-family: hoboStd;
     opacity: 0; //must start invisible
     background-color: #3cb8e7;
     border: 1px solid white;
@@ -36,6 +35,7 @@
     span.folder-label {
         font-size: 1.5em;
         font-weight: bold;
+        font-family: hobo-std, sans-serif;
     }
 
     .MuiCardContent-root {

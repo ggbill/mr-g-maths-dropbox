@@ -1,6 +1,5 @@
 import React from 'react'
 import { Card, CardContent, CardActionArea, CardMedia } from '@material-ui/core'
-import { Link } from "react-router-dom"
 import VideocamIcon from '@material-ui/icons/Videocam';
 import ImageIcon from '@material-ui/icons/Image';
 import AudiotrackIcon from '@material-ui/icons/Audiotrack';
@@ -12,32 +11,22 @@ import useMrGFunctions from "../../hooks/useMrGFunctions"
 
 interface InputProps {
     resource: any
-    // matchUrl: string
     index: number
     setCurrentPath: (path: string) => void
-    // setIsResourceBadgeClicked: () => void
 }
 
 const ResourceBadge = (props: InputProps) => {
 
     const mrGFunctions = useMrGFunctions()
-
     const cloudinaryFunctions = useCloudinaryFunctions()
-
-    // const generateLink = (): string => {
-    //     let matchUrlSplit = props.matchUrl.split('/resource/')
-    //     return `${matchUrlSplit[0]}/resource/${props.resource}`
-    // }
 
     return (
         <>
-        {/* <p>{JSON.stringify(props.resource)}</p> */}
             {mrGFunctions.isVideoFormat(props.resource.name.split(".")[1]) &&
                 <>
 
                     < Card key={props.resource} className="resource-badge">
                     <CardActionArea onClick={() => props.setCurrentPath(props.resource.path_display)}>
-                        {/* <CardActionArea component={Link} to={''} onClick={props.setIsResourceBadgeClicked}> */}
                             <CardMedia
                                 image={`data:video/${props.resource.name.split(".")[1]};base64, ${props.resource.thumbnail}`}
                                 title="Click to view video!"

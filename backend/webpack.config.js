@@ -12,7 +12,6 @@ fs.readdirSync("node_modules")
     });
 
 module.exports = {
-    //   entry: "./server/server.ts",
     entry: "./main.ts",
     output: {
         path: path.join(__dirname, "/build"),
@@ -26,7 +25,7 @@ module.exports = {
             {
                 test: /\.tsx?$/,
                 loader: "ts-loader"
-            },
+            }
         ],
     },
     target: "node",

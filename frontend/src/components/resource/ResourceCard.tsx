@@ -1,6 +1,5 @@
 import React from 'react'
 import { Card, CardContent, CardActionArea, CardMedia } from '@material-ui/core'
-import { Link } from "react-router-dom"
 import VideocamIcon from '@material-ui/icons/Videocam';
 import ImageIcon from '@material-ui/icons/Image';
 import AudiotrackIcon from '@material-ui/icons/Audiotrack';
@@ -11,7 +10,6 @@ import useMrGFunctions from "../../hooks/useMrGFunctions"
 
 interface InputProps {
     resource: any
-    // matchUrl: string
     index: number
     setCurrentPath: (path: string) => void
 }
@@ -22,7 +20,6 @@ const ResourceCard = (props: InputProps) => {
 
     return (
         <>
-            {/* {JSON.stringify(props.resource)} */}
             {mrGFunctions.isVideoFormat(props.resource.name.split(".")[1]) &&
                 <>
 
