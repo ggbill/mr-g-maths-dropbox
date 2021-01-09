@@ -8,7 +8,7 @@ const NoContent = () => {
     const [isDisplayNoContent, setIsDisplayNoContent] = useState(false)
 
     useEffect(() => {
-        const timer = setTimeout(() => enableLoading(), 5000);
+        const timer = setTimeout(() => enableLoading(), 1000);
 
         //same as componentWillUnmount
         return () => {

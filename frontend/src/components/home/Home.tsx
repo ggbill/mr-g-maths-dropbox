@@ -22,12 +22,14 @@ const Home = () => {
     const dropBox = useDropbox();
     const [file, setFile] = useState<any>(null)
     const [isFile, setIsFile] = useState<boolean>(false)
+    const [isNoContentFound, setisNoContentFound] = useState<boolean>(false)
 
 
     const getFolderContent = (): void => {
         setLoading(true)
         setFiles([])
         setSubFolders([])
+        setisNoContentFound(false)
         dropBox.getFolderContent(currentPath).then((data: any) => {
             if (data) {
                 if (!isCancelled.current) {
@@ -39,6 +41,8 @@ const Home = () => {
                     setFiles(data.filter(entry => entry['.tag'] === "file"))
                     setIsFile(false)
                 }
+            }else{
+                setisNoContentFound(true)
             }
             setLoading(false)
         })
@@ -159,7 +163,7 @@ const Home = () => {
                     <ResourceComponent file={file} allFilesInFolder={files} setCurrentPath={setCurrentPathVar} />
                 }
 
-                {!loading && !isFile && !subFolders.length && !files.length && <div className="no-content-found">
+                {!loading && !isFile && isNoContentFound && <div className="no-content-found">
                     <NoContent />
                 </div>}
             </div >
