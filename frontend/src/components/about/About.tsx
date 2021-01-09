@@ -1,6 +1,7 @@
 import './about.scss';
 import React from 'react'
 import MenuBar from '../shared/MenuBar';
+import Footer from '../shared/Footer';
 
 
 const About = () => {
@@ -8,7 +9,7 @@ const About = () => {
     return (
         <>
             <MenuBar page="about" setCurrentPath={() => {}}/>
-            <div className="content about-page">
+            <div className="content about-page full-height-content">
                 <div className="intro-section">
                     <span className="title">Welcome young maths Gs and old!</span>
                     <p>
@@ -28,6 +29,7 @@ const About = () => {
                 </p>
                 </div>
             </div>
+            <Footer page="about" setCurrentPath={() => {}}/>
         </>
     )
 }

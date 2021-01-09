@@ -1,9 +1,9 @@
 .full-height-content {
-    min-height: calc(100vh - 122px); /* will cover the 100% of viewport minus footer */
+    min-height: calc(100vh - 262px); /* will cover the 100% of viewport minus footer */
     overflow: hidden;
     display: block;
-    background-image: url("./images/background.gif");
     padding-bottom: 24px;
+
 }
 
 .content {

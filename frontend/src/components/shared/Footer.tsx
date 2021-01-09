@@ -2,7 +2,12 @@ import React from "react"
 import { Link } from 'react-router-dom'
 import "./footer.scss"
 
-const Footer = () => {
+interface InputProps {
+    page: string
+    setCurrentPath: (path: string) => void
+}
+
+const Footer = (props: InputProps) => {
 
     return (
         <section className="footer-section">
@@ -10,10 +15,16 @@ const Footer = () => {
                 Email: <a href="mailto:thanos.gidaropoulos@tta.org.uk">thanos.gidaropoulos@tta.org.uk</a>
             </div>
             <div className="middle-content">
-                <Link to={'/'}>
-                    <img className="logo" alt="logo" src={require("../../images/G-with-glow.png")} />
-                </Link>
+            {props.page === "about" ?
+                        <>
+                            <Link to={'/'}>
+                            <img className="logo" alt="logo" src={require("../../images/G-with-glow.png")} />
+                            </Link>
 
+                        </>
+                        :
+                        <img className="logo" alt="logo" src={require("../../images/G-with-glow.png")} onClick={() => props.setCurrentPath("")} />
+                    }
             </div>
             <div className="right-content">
 

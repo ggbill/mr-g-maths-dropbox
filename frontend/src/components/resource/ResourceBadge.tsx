@@ -28,7 +28,8 @@ const ResourceBadge = (props: InputProps) => {
                     < Card key={props.resource} className="resource-badge">
                     <CardActionArea onClick={() => props.setCurrentPath(props.resource.path_display)}>
                             <CardMedia
-                                image={`data:video/${props.resource.name.split(".")[1]};base64, ${props.resource.thumbnail}`}
+                                // image={`data:video/${props.resource.name.split(".")[1]};base64, ${props.resource.thumbnail}`}
+                                image={require("../../images/Video-icon.png")}
                                 title="Click to view video!"
                             />
                             <CardContent>
@@ -71,7 +72,8 @@ const ResourceBadge = (props: InputProps) => {
                 <Card key={props.resource} className="resource-badge">
                     <CardActionArea onClick={() => props.setCurrentPath(props.resource.path_display)}>
                         <CardMedia
-                            image={`data:image/${props.resource.name.split(".")[1]};base64, ${props.resource.thumbnail}`}
+                            // image={`data:image/${props.resource.name.split(".")[1]};base64, ${props.resource.thumbnail}`}
+                            image={require("../../images/Image-icon.png")}
                             title="Click to view the image!"
                         />
                         <CardContent>

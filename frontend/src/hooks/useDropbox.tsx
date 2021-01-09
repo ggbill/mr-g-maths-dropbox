@@ -10,7 +10,7 @@ const useDropbox = () => {
         return dbx.filesListFolder({
             path: path
         }).then(res => {
-            console.log(res)
+            // console.log(res)
             return (res.result.entries.sort((a, b) => Number(a.name.split("_")[0]) - Number(b.name.split("_")[0])))
         }).catch(error => {
             console.log(error)

@@ -26,15 +26,15 @@ const App = () => {
         <HttpsRedirect>
             <Router history={history}>
                 {/* <MenuBar /> */}
-                <div className="full-height-content">
+                {/* <div className="full-height-content"> */}
                     <Switch>
                         <Route path="/" component={Home} exact />
                         <Route path="/about" component={About} exact />
                         {/* <Route path="/resource/:fileName" component={ResourcePage} /> */}
                         {/* <Route path="/:dynamicPath" component={DynamicComponent} /> */}
                     </Switch>
-                </div>
-                <Footer />
+                {/* </div> */}
+                {/* <Footer /> */}
             </Router>
         </HttpsRedirect>
     );

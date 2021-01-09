@@ -10,6 +10,7 @@ import useDropbox from "../../hooks/useDropbox"
 import BreadCrumbs from '../shared/BreadCrumbs';
 import MenuBar from '../shared/MenuBar';
 import ResourceComponent from '../resource/ResourceComponent';
+import Footer from '../shared/Footer';
 
 const Home = () => {
     const isCancelled = useRef(false)
@@ -31,7 +32,11 @@ const Home = () => {
             if (data) {
                 if (!isCancelled.current) {
                     setSubFolders(data.filter(entry => entry['.tag'] === "folder"))
-                    setFilesAndGetThumbnails(data.filter(entry => entry['.tag'] === "file"))
+
+                    //put back for thumbnails
+                    // setFilesAndGetThumbnails(data.filter(entry => entry['.tag'] === "file"))
+
+                    setFiles(data.filter(entry => entry['.tag'] === "file"))
                     setIsFile(false)
                 }
             }
@@ -102,8 +107,8 @@ const Home = () => {
     return (
         <>
             <MenuBar page="home" setCurrentPath={setCurrentPath} />
-            <div className="content home-page">
-            {/* <p>files: {JSON.stringify(files)}</p> */}
+            <div className="content home-page full-height-content">
+            {/* <p>files: {JSON.stringify(subFolders)}</p> */}
                 {currentPath === "" ?
                     <div className="intro-section">
                         <img className="minion-gif-desktop" alt="minion" src={require("../../images/Maths-food-Minion-black.gif")} />
@@ -158,6 +163,8 @@ const Home = () => {
                     <NoContent />
                 </div>}
             </div >
+
+            <Footer page="home" setCurrentPath={setCurrentPath} />
         </>
     )
 }
