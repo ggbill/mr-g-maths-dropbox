@@ -19,7 +19,7 @@ const ResourceComponent = (props: InputProps) => {
     const isCancelled = React.useRef(false)
     const [contentLink, setContentLink] = useState<string>("")
     const [siblingResources, setSiblingResources] = useState<any>([])
-
+    const [resourceIndex, setResourceIndex] = useState<number>(0)
     const isMobile = useMediaQuery('(max-width:400px)');
     const isTablet = useMediaQuery('(max-width:600px) and (min-width: 401px)');
     const mrGFunctions = useMrGFunctions()
@@ -43,9 +43,11 @@ const ResourceComponent = (props: InputProps) => {
 
         let siblingResources: any[] = []
 
-        props.allFilesInFolder.forEach(file => {
+        props.allFilesInFolder.forEach((file, index) => {
             if (file.path_lower !== props.file.path_lower) {
                 siblingResources.push(file)
+            }else{
+                setResourceIndex(index)
             }
         });
 
@@ -149,6 +151,7 @@ const ResourceComponent = (props: InputProps) => {
          
             <Carousel
                 showThumbs={false}
+                selectedItem={resourceIndex}
                 centerMode={true}
                 centerSlidePercentage={calculateCenterSlidePercentage()}
                 infiniteLoop={true}
