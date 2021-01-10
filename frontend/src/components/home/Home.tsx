@@ -11,6 +11,9 @@ import BreadCrumbs from '../shared/BreadCrumbs';
 import MenuBar from '../shared/MenuBar';
 import ResourceComponent from '../resource/ResourceComponent';
 import Footer from '../shared/Footer';
+import ReactGA from 'react-ga';
+
+ReactGA.initialize('UA-165948277-1');
 
 const Home = () => {
     const isCancelled = useRef(false)
@@ -84,6 +87,12 @@ const Home = () => {
     }
 
     const setCurrentPathVar = (path: string) => {
+        //fire an event to Google Analytics
+        ReactGA.event({
+            category: 'Link Click',
+            action: `Link clicked: ${path}`,
+        });
+
         setCurrentPath(path)
     }
 
