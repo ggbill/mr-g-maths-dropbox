@@ -75,7 +75,7 @@ const ResourceComponent = (props: InputProps) => {
                         <video
                             src={contentLink}
                             controls={true}
-                            autoPlay={true}
+                            autoPlay={false}
                         >
                             Your browser does not support HTML5 video tags.
                                 </video>
