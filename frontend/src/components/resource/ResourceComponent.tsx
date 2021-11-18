@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import './resourceComponent.scss'
 import ResourceBadge from './ResourceBadge'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -46,7 +46,7 @@ const ResourceComponent = (props: InputProps) => {
         props.allFilesInFolder.forEach((file, index) => {
             if (file.path_lower !== props.file.path_lower) {
                 siblingResources.push(file)
-            }else{
+            } else {
                 setResourceIndex(index)
             }
         });
@@ -54,7 +54,8 @@ const ResourceComponent = (props: InputProps) => {
         setSiblingResources(siblingResources)
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
+
         dropBox.getContentLink(props.file.path_lower).then((res: any) => {
             setContentLink(res.link)
         })
@@ -67,18 +68,36 @@ const ResourceComponent = (props: InputProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps 
     }, []);
 
+    // useLayoutEffect(() => {
+    //     if (mrGFunctions.isVideoFormat(props.file.name.split(".")[1])){
+    //         let element: HTMLVideoElement
+
+    //         element = document.getElementById("video-player") as HTMLVideoElement
+    //         element.src = contentLink
+    //     }
+    // }, [])
+    const refreshVideo = () => {
+        (document.getElementById("video-player") as HTMLVideoElement).src = contentLink
+    }
+
+
+
     return (
         <>
             {mrGFunctions.isVideoFormat(props.file.name.split(".")[1]) &&
                 <>
                     <div className="resource-wrapper">
+                        <div className="refresh-button-wrapper">
+                            <button onClick={refreshVideo}>refresh</button>
+                        </div>
                         <video
+                            id="video-player"
                             src={contentLink}
                             controls={true}
-                            autoPlay={false}
+                            autoPlay={true}
                         >
                             Your browser does not support HTML5 video tags.
-                                </video>
+                        </video>
                     </div>
                 </>
             }
@@ -93,7 +112,7 @@ const ResourceComponent = (props: InputProps) => {
                             autoPlay={true}
                         >
                             Your browser does not support the audio element.
-                                </audio>
+                        </audio>
                     </div>
                 </>
             }
@@ -124,7 +143,7 @@ const ResourceComponent = (props: InputProps) => {
                             :
                             <object data={contentLink} >
                                 Your browser does not support the pdf viewer element.
-                                    </object>
+                            </object>
                         }
                     </div>
                 </>
@@ -148,7 +167,7 @@ const ResourceComponent = (props: InputProps) => {
                     </div>
                 </>
             }
-         
+
             <Carousel
                 showThumbs={false}
                 selectedItem={resourceIndex}
