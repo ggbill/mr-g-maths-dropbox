@@ -77,7 +77,20 @@ const ResourceComponent = (props: InputProps) => {
     //     }
     // }, [])
     const refreshVideo = () => {
-        (document.getElementById("video-player") as HTMLVideoElement).src = contentLink
+        // (document.getElementById("video-player") as HTMLVideoElement).src = contentLink
+
+        const rVideo = document.getElementById("video-player") as HTMLVideoElement
+        if (rVideo) {
+            rVideo.pause();
+            rVideo
+                .play()
+                .then((res) => {
+                    console.log("playing start");
+                })
+                .catch((err) => {
+                    console.log("error playing", err);
+                });
+        }
     }
 
 

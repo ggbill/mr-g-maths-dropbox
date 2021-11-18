@@ -5,19 +5,19 @@
     max-width: 600px;
     margin: 24px auto 0;
 
-    .refresh-button-wrapper{
-        display: flex;
-        justify-content: flex-end;
-        width: 100%;
+    // .refresh-button-wrapper{
+    //     display: flex;
+    //     justify-content: flex-end;
+    //     width: 100%;
 
-        button{
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            margin-bottom: 6px;
-        }
-    }
+    //     button{
+    //         background: none;
+    //         border: none;
+    //         color: white;
+    //         cursor: pointer;
+    //         margin-bottom: 6px;
+    //     }
+    // }
 
     &.audio {
         img {
